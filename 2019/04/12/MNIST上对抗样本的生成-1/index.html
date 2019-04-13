@@ -103,12 +103,12 @@
 <meta property="og:site_name" content="Tan Chu&#39;s blog">
 <meta property="og:description" content="主要思路先训练好一个判决的CNN；然后搭建一个生成网络用于生成噪声；X’=X+noise，这样就产生了一个对抗样本；至于Generate这个网络的训练，在于损失函数的设置，具体详见代码  Net的代码（CNN和生成噪声的网络）123456789101112131415161718192021222324252627282930313233343536373839404142434445464748">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190413004210843.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dKSEtER0hQ,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-04-12T17:40:56.252Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/201904131242041.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dKSEtER0hQ,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-04-13T04:45:17.390Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MNIST上对抗样本的生成-1">
 <meta name="twitter:description" content="主要思路先训练好一个判决的CNN；然后搭建一个生成网络用于生成噪声；X’=X+noise，这样就产生了一个对抗样本；至于Generate这个网络的训练，在于损失函数的设置，具体详见代码  Net的代码（CNN和生成噪声的网络）123456789101112131415161718192021222324252627282930313233343536373839404142434445464748">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190413004210843.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dKSEtER0hQ,size_16,color_FFFFFF,t_70">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/201904131242041.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dKSEtER0hQ,size_16,color_FFFFFF,t_70">
 
 
 
@@ -368,7 +368,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-13 01:40:56" itemprop="dateModified" datetime="2019-04-13T01:40:56+08:00">2019-04-13</time>
+                <time title="修改时间：2019-04-13 12:45:17" itemprop="dateModified" datetime="2019-04-13T12:45:17+08:00">2019-04-13</time>
               
             
           </span>
@@ -428,7 +428,7 @@
 <hr>
 <h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">开始训练CNN</span><br><span class="line">第 <span class="number">100</span> 批，每批 <span class="number">100</span> 个，损失为 <span class="number">0.1981</span></span><br><span class="line">第 <span class="number">200</span> 批，每批 <span class="number">100</span> 个，损失为 <span class="number">0.0751</span></span><br><span class="line">第 <span class="number">300</span> 批，每批 <span class="number">100</span> 个，损失为 <span class="number">0.04781</span></span><br><span class="line">第 <span class="number">400</span> 批，每批 <span class="number">100</span> 个，损失为 <span class="number">0.01824</span></span><br><span class="line">第 <span class="number">500</span> 批，每批 <span class="number">100</span> 个，损失为 <span class="number">0.1527</span></span><br><span class="line">第 <span class="number">600</span> 批，每批 <span class="number">100</span> 个，损失为 <span class="number">0.02217</span></span><br><span class="line"></span><br><span class="line">开始训练生成网络</span><br><span class="line">第 <span class="number">100</span> 批，每批 <span class="number">100</span> 个，损失为 <span class="number">-1.007</span></span><br><span class="line">第 <span class="number">200</span> 批，每批 <span class="number">100</span> 个，损失为 <span class="number">-1.353</span></span><br><span class="line">第 <span class="number">300</span> 批，每批 <span class="number">100</span> 个，损失为 <span class="number">-1.298</span></span><br><span class="line">第 <span class="number">400</span> 批，每批 <span class="number">100</span> 个，损失为 <span class="number">-1.412</span></span><br><span class="line">第 <span class="number">500</span> 批，每批 <span class="number">100</span> 个，损失为 <span class="number">-1.283</span></span><br><span class="line">第 <span class="number">600</span> 批，每批 <span class="number">100</span> 个，损失为 <span class="number">-1.436</span></span><br><span class="line"></span><br><span class="line">测试中...</span><br><span class="line">在对抗样本上正确率: <span class="number">0.388500</span></span><br></pre></td></tr></table></figure>
 <hr>
-<h2 id="图片样例"><a href="#图片样例" class="headerlink" title="图片样例"></a>图片样例</h2><p><img src="https://img-blog.csdnimg.cn/20190413004210843.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dKSEtER0hQ,size_16,color_FFFFFF,t_70" alt="对抗样本示例"></p>
+<h2 id="图片样例"><a href="#图片样例" class="headerlink" title="图片样例"></a>图片样例</h2><p><img src="https://img-blog.csdnimg.cn/201904131242041.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dKSEtER0hQ,size_16,color_FFFFFF,t_70" alt="对抗样本示例"></p>
 
       
     </div>
@@ -734,7 +734,7 @@
     
     
   
-  <script color="25,25,112" opacity="0.8" zindex="-1" count="100" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script color="25,25,112" opacity="0.8" zindex="-1" count="200" src="/lib/canvas-nest/canvas-nest.min.js"></script>
 
 
 
