@@ -103,10 +103,15 @@
 <meta property="og:site_name" content="Tan Chu&#39;s blog">
 <meta property="og:description" content="决策树 概述决策树基于“树”结构进行决策：   每个“内部节点”对应于某个属性上的测试  每个分枝对应于该测试的一种可能结果（即属性的某个取值）  每个叶节点对应于一个“预测结果”">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-16T12:17:19.745Z">
+<meta property="og:image" content="http://yoursite.com/2019/07/16/机器学习笔记-1/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/16/机器学习笔记-1/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/16/机器学习笔记-1/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/16/机器学习笔记-1/4.png">
+<meta property="og:updated_time" content="2019-07-16T12:52:21.514Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习笔记-1">
 <meta name="twitter:description" content="决策树 概述决策树基于“树”结构进行决策：   每个“内部节点”对应于某个属性上的测试  每个分枝对应于该测试的一种可能结果（即属性的某个取值）  每个叶节点对应于一个“预测结果”">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/16/机器学习笔记-1/1.png">
 
 
 
@@ -349,7 +354,7 @@
                 
               
 
-              <time title="创建时间：2019-07-16 19:57:46 / 修改时间：20:17:19" itemprop="dateCreated datePublished" datetime="2019-07-16T19:57:46+08:00">2019-07-16</time>
+              <time title="创建时间：2019-07-16 19:57:46 / 修改时间：20:52:21" itemprop="dateCreated datePublished" datetime="2019-07-16T19:57:46+08:00">2019-07-16</time>
             
 
             
@@ -435,11 +440,11 @@
 <ul>
 <li><p>Bagging</p>
 <p>从训练集从进行子抽样组成每个基模型所需要的子训练集，对所有基模型预测的结果进行综合产生最终的预测结果</p>
+<p><img src="/2019/07/16/机器学习笔记-1/1.png" alt="1"></p>
 </li>
-</ul>
-<ul>
 <li><p>Boosting</p>
 <p>训练过程为阶梯状，基模型按次序一一进行训练（实现上可以做到并行），基模型的训练集按照某种策略每次都进行一定的转化。对所有基模型预测的结果进行线性综合产生最终的预测结果</p>
+<p><img src="/2019/07/16/机器学习笔记-1/2.png" alt="2"></p>
 </li>
 <li><p>Stacking</p>
 <p>将训练好的所有基模型对训练基进行预测，第j个基模型对第i个训练样本的预测值将作为新的训练集中第i个样本的第j个特征值，最后基于新的训练集进行训练。</p>
@@ -451,17 +456,19 @@
 <p>聚类是用于找出不带标签数据的相似性的算法。</p>
 <h3 id="K-means聚类算法简介"><a href="#K-means聚类算法简介" class="headerlink" title="K-means聚类算法简介"></a>K-means聚类算法简介</h3><p>设有样本$x_1-x_n$，要求分为$K$类，随机选取第$i$类的中心点$c_i$ ，计算每个样本所归属的类，然后更新新的$c_i=Average(x_j) ,x_j属于第i类$，然后不断迭代，直到各个$c_i$的值趋于稳定。</p>
 <h3 id="K-means详解"><a href="#K-means详解" class="headerlink" title="K-means详解"></a>K-means详解</h3><p>K-Means算法是一个重复移动类中心点的过程，把类的中心点，也称重心（centroids），移动到其包含成员的平均位置，然后重新划分其内部成员。</p>
-<p>$K​$必须是一个比训练集样本数小的正整数。有时，类的数量是由问题内容指定的。也有一些问题没有指定聚类的数量，最优的聚类数量是不确定的。后面我们会介绍一种启发式方法来估计最优聚类数量，称为肘部法则（Elbow Method）。</p>
-<p>K-Means的参数是类的重心位置和其内部观测值的位置。与广义线性模型和决策树类似，K-Means参数的最优解也是以成本函数最小化为目标。K-Means成本函数公式如下：<br>$$<br>J = \sum_{k=1}^k\sum_{i \in {C_k}}{|x_i-\mu_k|}^2<br>$$<br>$\mu_k​$是第$k​$个类的重心位置。成本函数是各个类畸变程度（distortions）之和。每个类的畸变程度等于该类重心与其内部成员位置距离的平方和。</p>
+<p>$K$必须是一个比训练集样本数小的正整数。有时，类的数量是由问题内容指定的。也有一些问题没有指定聚类的数量，最优的聚类数量是不确定的。后面我们会介绍一种启发式方法来估计最优聚类数量，称为肘部法则（Elbow Method）。</p>
+<p>K-Means的参数是类的重心位置和其内部观测值的位置。与广义线性模型和决策树类似，K-Means参数的最优解也是以成本函数最小化为目标。K-Means成本函数公式如下：<br>$$<br>J = \sum_{k=1}^k\sum_{i \in {C_k}}{|x_i-\mu_k|}^2<br>$$<br>$\mu_k$是第$k$个类的重心位置。成本函数是各个类畸变程度（distortions）之和。每个类的畸变程度等于该类重心与其内部成员位置距离的平方和。</p>
 <p>若类内部的成员彼此间越紧凑则类的畸变程度越小，反之，若类内部的成员彼此间越分散则类的畸变程度越大。求解成本函数最小化的参数就是一个重复配置每个类包含的观测值，并不断移动类重心的过程。首先，类的重心是随机确定的位置。实际上，重心位置等于随机选择的观测值的位置。每次迭代的时候，K-Means会把观测值分配到离它们最近的类，然后把重心移动到该类全部成员位置的平均值那里。</p>
 <h3 id="肘部法则"><a href="#肘部法则" class="headerlink" title="肘部法则"></a>肘部法则</h3><p>如果问题中没有指定$K$的值，可以通过肘部法则来估计聚类数量。</p>
 <p>肘部法则会把不同$K$值的成本函数值画出来。</p>
-<p>随着$K$值的增大，平均畸变程度会减小；每个类包含的样本数会减少，于是样本离其重心会更近。但是，随着$K​$值继续增大，平均畸变程度的改善效果会不断减低。</p>
+<p>随着$K$值的增大，平均畸变程度会减小；每个类包含的样本数会减少，于是样本离其重心会更近。但是，随着$K$值继续增大，平均畸变程度的改善效果会不断减低。</p>
 <p>$K$值增大过程中，畸变程度的改善效果下降幅度最大的位置对应的$K$值就是肘部。下面让我们用肘部法则来确定最佳的$K$值。</p>
 <ul>
 <li>案例1</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成数据 位于两个不同区域的点集</span></span><br><span class="line">cluster1 = np.random.uniform(<span class="number">0.5</span>, <span class="number">1.5</span>, (<span class="number">2</span>, <span class="number">10</span>))</span><br><span class="line">cluster2 = np.random.uniform(<span class="number">3.5</span>, <span class="number">4.5</span>, (<span class="number">2</span>, <span class="number">10</span>))</span><br><span class="line">X = np.hstack((cluster1, cluster2)).T   </span><br><span class="line"><span class="comment"># (2,10)+(2,10)-&gt;(2,20)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.cluster <span class="keyword">import</span> KMeans</span><br><span class="line"><span class="keyword">from</span> scipy.spatial.distance <span class="keyword">import</span> cdist</span><br><span class="line">K = range(<span class="number">1</span>, <span class="number">10</span>)   <span class="comment"># 枚举K的值</span></span><br><span class="line">meandistortions = []</span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> K:</span><br><span class="line">    kmeans = KMeans(n_clusters=k)   <span class="comment"># 将样本分为K类</span></span><br><span class="line">    kmeans.fit(X)</span><br><span class="line">    meandistortions.append(sum(np.min(cdist(X, kmeans.cluster_centers_, <span class="string">'euclidean'</span>), axis=<span class="number">1</span>)) / X.shape[<span class="number">0</span>])   <span class="comment"># 计算当前K的成本函数值</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2019/07/16/机器学习笔记-1/3.png" alt="3"></p>
+<p><img src="/2019/07/16/机器学习笔记-1/4.png" alt="4"></p>
 <p>从图中可以看出，$K$值从1到3时，平均畸变程度变化最大。超过3以后，平均畸变程度变化显著降低。因此肘部就是$K=3$。</p>
 
       
@@ -493,8 +500,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/16/MIPS汇编语言入门-1/" rel="next" title="MIPS汇编语言入门-1">
-                <i class="fa fa-chevron-left"></i> MIPS汇编语言入门-1
+              <a href="/2019/04/12/MNIST上对抗样本的生成-1/" rel="next" title="MNIST上对抗样本的生成-1">
+                <i class="fa fa-chevron-left"></i> MNIST上对抗样本的生成-1
               </a>
             
           </div>
@@ -572,7 +579,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -593,9 +600,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
