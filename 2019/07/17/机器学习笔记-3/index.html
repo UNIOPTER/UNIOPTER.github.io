@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="分类算法评价指标 二维混淆矩阵$$\left[\begin{matrix}真正例(TP) &amp;amp; 假反例(FN)\假正例(FP) &amp;amp; 真反例(TN) \end{matrix}\right]$$ 其实第对于二维混淆矩阵中的$a_{ij}​$，指的是真实样本值为$i​$，但是模型预测结果为$j​$的个数  代码实现 12345678910from sklearn.metrics impor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习笔记-3（模型评估与调参入门）">
+<meta property="og:url" content="http://yoursite.com/2019/07/17/机器学习笔记-3/index.html">
+<meta property="og:site_name" content="Tan Chu&#39;s blog">
+<meta property="og:description" content="分类算法评价指标 二维混淆矩阵$$\left[\begin{matrix}真正例(TP) &amp;amp; 假反例(FN)\假正例(FP) &amp;amp; 真反例(TN) \end{matrix}\right]$$ 其实第对于二维混淆矩阵中的$a_{ij}​$，指的是真实样本值为$i​$，但是模型预测结果为$j​$的个数  代码实现 12345678910from sklearn.metrics impor">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/07/17/机器学习笔记-3/1.png">
+<meta property="og:updated_time" content="2019-07-17T14:13:08.718Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习笔记-3（模型评估与调参入门）">
+<meta name="twitter:description" content="分类算法评价指标 二维混淆矩阵$$\left[\begin{matrix}真正例(TP) &amp;amp; 假反例(FN)\假正例(FP) &amp;amp; 真反例(TN) \end{matrix}\right]$$ 其实第对于二维混淆矩阵中的$a_{ij}​$，指的是真实样本值为$i​$，但是模型预测结果为$j​$的个数  代码实现 12345678910from sklearn.metrics impor">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/17/机器学习笔记-3/1.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/07/17/机器学习笔记-3/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>机器学习笔记-3（模型评估与调参入门） | Tan Chu's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tan Chu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/17/机器学习笔记-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tan Chu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tan Chu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">机器学习笔记-3（模型评估与调参入门）
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-17 21:40:46 / 修改时间：22:13:08" itemprop="dateCreated datePublished" datetime="2019-07-17T21:40:46+08:00">2019-07-17</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/机器学习/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="分类算法评价指标"><a href="#分类算法评价指标" class="headerlink" title="分类算法评价指标"></a>分类算法评价指标</h2><hr>
+<h3 id="二维混淆矩阵"><a href="#二维混淆矩阵" class="headerlink" title="二维混淆矩阵"></a>二维混淆矩阵</h3><p>$$<br>\left[<br>\begin{matrix}<br>真正例(TP) &amp; 假反例(FN)\<br>假正例(FP) &amp; 真反例(TN)</p>
+<p>\end{matrix}\right]<br>$$</p>
+<p>其实第对于二维混淆矩阵中的$a_{ij}​$，指的是真实样本值为$i​$，但是模型预测结果为$j​$的个数</p>
+<ul>
+<li><p>代码实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix</span><br><span class="line">y_true=[<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>]</span><br><span class="line">y_pred=[<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">print(confusion_matrix(y_true,y_pred))</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([[1, 1, 0],</span></span><br><span class="line"><span class="string">       [1, 1, 0],</span></span><br><span class="line"><span class="string">       [0, 0, 2]], dtype=int64)</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<a id="more"></a>
+<h3 id="错误率、准确率、精确率、召回率"><a href="#错误率、准确率、精确率、召回率" class="headerlink" title="错误率、准确率、精确率、召回率"></a>错误率、准确率、精确率、召回率</h3><ul>
+<li><p>准确率<br>$$<br>accuracy=\frac{TP+TN}{TP+FP+TN+FN}<br>$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score</span><br><span class="line">y_true =[<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>]</span><br><span class="line">y_pred = [<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>]  </span><br><span class="line">acc=accuracy_score(y_true,y_pred)</span><br></pre></td></tr></table></figure>
+<p>错误率=1-准确率</p>
+</li>
+<li><p>精确率<br>$$<br>Precision=\frac{TP}{TP+FP}<br>$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> precision_score</span><br><span class="line">prec=precision_score(y_true,y_pred)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>召回率</p>
+<p>又称查全率（Recall），召回率是指分类器分类正确的正样本个数占所有的正样本个数的比例。<br>$$<br>Recall=\frac{TP}{TP+TN}<br>$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> recall_score</span><br><span class="line">recall=recall_score(y_true,y_pred,average=<span class="string">'macro'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>F1-score</p>
+<p>召回率和精确率的调和平均值</p>
+</li>
+</ul>
+<h3 id="Sklearn分类报告"><a href="#Sklearn分类报告" class="headerlink" title="Sklearn分类报告"></a>Sklearn分类报告</h3><p>sklearn中的classification_report函数用于显示主要分类指标的文本报告。</p>
+<p>在报告中显示每个类的精确度，召回率，F1值等信息。</p>
+<p>主要参数：</p>
+<ul>
+<li>1维数组，或标签指示器数组/稀疏矩阵，目标值。 </li>
+<li>y_pred：1维数组，或标签指示器数组/稀疏矩阵，分类器返回的估计值。 </li>
+<li>labels：array，shape = [n_labels]，报表中包含的标签索引的可选列表。 </li>
+<li>target_names：字符串列表，与标签匹配的可选显示名称（相同顺序）。 </li>
+<li>sample_weight：类似于shape = [n_samples]的数组，可选项，样本权重。 </li>
+<li>digits：int型，输出浮点值的位数。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> classification_report</span><br><span class="line">y_true =[<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>]</span><br><span class="line">y_pred = [<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>]</span><br><span class="line">target_names = [<span class="string">'class 0'</span>, <span class="string">'class 1'</span>]</span><br><span class="line"></span><br><span class="line">report = classification_report(y_true, y_pred, target_names=target_names)</span><br><span class="line">print(report)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">     		 precision    recall  f1-score   support</span></span><br><span class="line"><span class="string">    class 0       1.00      0.67      0.80         3</span></span><br><span class="line"><span class="string">    class 1       0.50      1.00      0.67         1</span></span><br><span class="line"><span class="string">  avg/total       0.88      0.75      0.77         4</span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<h2 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h2><hr>
+<h3 id="留出法"><a href="#留出法" class="headerlink" title="留出法"></a>留出法</h3><p>将原始数据直接划分为互斥的两类，其中一部分用来训练模型，另外一部分用来测试。</p>
+<p>前者是训练集，后者是测试集。</p>
+<p>在sklearn当中，使用train_test_split可以将数据分为训练集和测试集。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris <span class="comment"># iris数据集</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split <span class="comment"># 分割数据模块</span></span><br><span class="line"></span><br><span class="line">iris = load_iris()</span><br><span class="line">X = iris.data</span><br><span class="line">y = iris.target</span><br><span class="line"></span><br><span class="line"><span class="comment">#对数据集进行快速打乱（分为训练集和测试集）</span></span><br><span class="line"><span class="comment"># 对数据集进行了shuffle后按照给定的test_size 进行数据集划分</span></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=<span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="交叉验证法"><a href="#交叉验证法" class="headerlink" title="交叉验证法"></a>交叉验证法</h3><p>交叉验证的基本思想是：将数据集进行一系列分割，生成一组不同的训练测试集，然后分别训练模型并计算测试准确率，最后对结果进行平均处理。这样来有效降低测试准确率的差异。</p>
+<p><img src="/2019/07/17/机器学习笔记-3/1.png" alt="1"></p>
+<p>比如上面，我们将数据集分为5折，做一次交叉验证，实际上它是计算了5次，将每一折都当做一次测试集，其余四折当做训练集，这样循环五次。通过传入的模型，训练五次，最后将五次结果求平均值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> cross_val_score <span class="comment"># K折交叉验证模块</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用K折交叉验证模块</span></span><br><span class="line"><span class="comment">#对数据集进行指定次数的交叉验证并为每次验证效果评测</span></span><br><span class="line"><span class="comment"># cv  默认使用KFold 或StratifiedKFold 进行数据集打乱</span></span><br><span class="line">scores = cross_val_score(knn,X,y,scoring=<span class="string">'accuracy'</span>,cv=<span class="number">10</span>) <span class="comment"># 内部已经做了训练和测试 与以往的留出法有所区别</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#将5次的预测准确率打印出</span></span><br><span class="line">print(scores)</span><br><span class="line"><span class="comment"># [ 0.96666667 1.  0.93333333  0.96666667  1.]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#将5次的预测准确平均率打印出</span></span><br><span class="line">print(scores.mean())</span><br><span class="line"><span class="comment"># 0.973333333333</span></span><br></pre></td></tr></table></figure>
+<h3 id="KFold"><a href="#KFold" class="headerlink" title="KFold"></a>KFold</h3><p>K折交叉验证，这是将数据集分成K份的方案，所谓K折就是将数据集通过K次分割，使得所有数据既在训练集出现过，又在测试集出现过，当然，每次分割中不会有重叠。相当于无放回抽样。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> KFold</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">X = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>,<span class="string">'e'</span>]</span><br><span class="line">kf = KFold(n_splits=<span class="number">3</span>)   <span class="comment"># 三次分割</span></span><br><span class="line">kf.split(X)  <span class="comment"># 生成的是类似range的东西</span></span><br><span class="line"><span class="keyword">for</span> train, test <span class="keyword">in</span> kf.split(X):</span><br><span class="line">    print(train,test) <span class="comment"># 对应的下标</span></span><br><span class="line">    print(np.array(X)[train])</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[2 3 4] [0 1]</span></span><br><span class="line"><span class="string">['c' 'd' 'e']</span></span><br><span class="line"><span class="string">[0 1 4] [2 3]</span></span><br><span class="line"><span class="string">['a' 'b' 'e']</span></span><br><span class="line"><span class="string">[0 1 2 3] [4]</span></span><br><span class="line"><span class="string">['a' 'b' 'c' 'd']</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<h2 id="模型调参"><a href="#模型调参" class="headerlink" title="模型调参"></a>模型调参</h2><hr>
+<p>利用网格搜索（GridSearchCV）和随机搜索（RandomizedSearchCV）实现参数的合适选取。</p>
+<p>这里直接给出Sklearn的代码。</p>
+<h3 id="引用库"><a href="#引用库" class="headerlink" title="引用库"></a>引用库</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris  <span class="comment"># 自带的样本数据集</span></span><br><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier  <span class="comment"># 要估计的是knn里面的参数，包括k的取值和样本权重分布方式</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV,RandomizedSearchCV  <span class="comment"># 网格搜索和随机搜索</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> classification_report</span><br></pre></td></tr></table></figure>
+<h3 id="输出报告的函数"><a href="#输出报告的函数" class="headerlink" title="输出报告的函数"></a>输出报告的函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">out</span><span class="params">(clf)</span>:</span></span><br><span class="line">    print(<span class="string">"Best parameters set found on development set:"</span>)</span><br><span class="line">    print()</span><br><span class="line">    print(clf.best_params_)</span><br><span class="line">    print()</span><br><span class="line"></span><br><span class="line">    print(<span class="string">"Grid scores on development set:"</span>)</span><br><span class="line">    print()</span><br><span class="line">    means = clf.cv_results_[<span class="string">'mean_test_score'</span>]</span><br><span class="line">    stds = clf.cv_results_[<span class="string">'std_test_score'</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> mean, std, params <span class="keyword">in</span> zip(means, stds, clf.cv_results_[<span class="string">'params'</span>]):    </span><br><span class="line">        print(<span class="string">"%0.3f (+/-%0.03f) for %r"</span> % (mean, std * <span class="number">2</span>, params))</span><br><span class="line">    print()</span><br><span class="line"></span><br><span class="line">    print(<span class="string">"Detailed classification report:"</span>)</span><br><span class="line">    print()</span><br><span class="line">    print(<span class="string">"The model is trained on the full development set."</span>)</span><br><span class="line">    print(<span class="string">"The scores are computed on the full evaluation set."</span>)</span><br><span class="line">    print()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 注意最后利用测试集展示的才是泛化误差</span></span><br><span class="line">    y_true, y_pred = y_test, clf.predict(X_test)</span><br><span class="line">    print(classification_report(y_true, y_pred))</span><br><span class="line">    print()</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure>
+<h3 id="载入鸢尾花数据集"><a href="#载入鸢尾花数据集" class="headerlink" title="载入鸢尾花数据集"></a>载入鸢尾花数据集</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">iris=load_iris()</span><br><span class="line">X=iris.data</span><br><span class="line">y=iris.target</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">0.3</span>, random_state=<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">scores=[<span class="string">'accuracy'</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="决策树的分类和调参"><a href="#决策树的分类和调参" class="headerlink" title="决策树的分类和调参"></a>决策树的分类和调参</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeClassifier  <span class="comment"># 决策树</span></span><br><span class="line">max_depth = range(<span class="number">1</span>,<span class="number">10</span>,<span class="number">1</span>)</span><br><span class="line">min_samples_leaf = range(<span class="number">1</span>,<span class="number">10</span>,<span class="number">2</span>)</span><br><span class="line">tuned_parameters_DTC = dict(max_depth=max_depth, min_samples_leaf=min_samples_leaf)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> score <span class="keyword">in</span> scores:</span><br><span class="line">    print(<span class="string">"# Tuning hyper-parameters for %s"</span> % score)</span><br><span class="line">    print()</span><br><span class="line">    <span class="comment"># 通过 GridSearchCV 搜索最佳的超参数</span></span><br><span class="line">    model_A = DecisionTreeClassifier()</span><br><span class="line"></span><br><span class="line">    clf=GridSearchCV(model_A,tuned_parameters_DTC,cv=<span class="number">5</span>,scoring=<span class="string">"%s"</span> % score)</span><br><span class="line">    clf.fit(X_train,y_train)</span><br><span class="line"></span><br><span class="line">    out(clf)</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure>
+<p>最终输出的报告结果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"># Tuning hyper-parameters for accuracy</span><br><span class="line"></span><br><span class="line">Best parameters set found on development set:</span><br><span class="line"></span><br><span class="line">&#123;&apos;max_depth&apos;: 3, &apos;min_samples_leaf&apos;: 1&#125;</span><br><span class="line"></span><br><span class="line">Grid scores on development set:</span><br><span class="line"></span><br><span class="line">0.657 (+/-0.025) for &#123;&apos;max_depth&apos;: 1, &apos;min_samples_leaf&apos;: 1&#125;</span><br><span class="line">0.657 (+/-0.025) for &#123;&apos;max_depth&apos;: 1, &apos;min_samples_leaf&apos;: 3&#125;</span><br><span class="line">0.657 (+/-0.025) for &#123;&apos;max_depth&apos;: 1, &apos;min_samples_leaf&apos;: 5&#125;</span><br><span class="line">0.657 (+/-0.025) for &#123;&apos;max_depth&apos;: 1, &apos;min_samples_leaf&apos;: 7&#125;</span><br><span class="line">0.657 (+/-0.025) for &#123;&apos;max_depth&apos;: 1, &apos;min_samples_leaf&apos;: 9&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 2, &apos;min_samples_leaf&apos;: 1&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 2, &apos;min_samples_leaf&apos;: 3&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 2, &apos;min_samples_leaf&apos;: 5&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 2, &apos;min_samples_leaf&apos;: 7&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 2, &apos;min_samples_leaf&apos;: 9&#125;</span><br><span class="line">0.952 (+/-0.083) for &#123;&apos;max_depth&apos;: 3, &apos;min_samples_leaf&apos;: 1&#125;</span><br><span class="line">0.952 (+/-0.104) for &#123;&apos;max_depth&apos;: 3, &apos;min_samples_leaf&apos;: 3&#125;</span><br><span class="line">0.933 (+/-0.096) for &#123;&apos;max_depth&apos;: 3, &apos;min_samples_leaf&apos;: 5&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 3, &apos;min_samples_leaf&apos;: 7&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 3, &apos;min_samples_leaf&apos;: 9&#125;</span><br><span class="line">0.952 (+/-0.057) for &#123;&apos;max_depth&apos;: 4, &apos;min_samples_leaf&apos;: 1&#125;</span><br><span class="line">0.952 (+/-0.104) for &#123;&apos;max_depth&apos;: 4, &apos;min_samples_leaf&apos;: 3&#125;</span><br><span class="line">0.933 (+/-0.096) for &#123;&apos;max_depth&apos;: 4, &apos;min_samples_leaf&apos;: 5&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 4, &apos;min_samples_leaf&apos;: 7&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 4, &apos;min_samples_leaf&apos;: 9&#125;</span><br><span class="line">0.952 (+/-0.058) for &#123;&apos;max_depth&apos;: 5, &apos;min_samples_leaf&apos;: 1&#125;</span><br><span class="line">0.952 (+/-0.104) for &#123;&apos;max_depth&apos;: 5, &apos;min_samples_leaf&apos;: 3&#125;</span><br><span class="line">0.933 (+/-0.096) for &#123;&apos;max_depth&apos;: 5, &apos;min_samples_leaf&apos;: 5&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 5, &apos;min_samples_leaf&apos;: 7&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 5, &apos;min_samples_leaf&apos;: 9&#125;</span><br><span class="line">0.943 (+/-0.035) for &#123;&apos;max_depth&apos;: 6, &apos;min_samples_leaf&apos;: 1&#125;</span><br><span class="line">0.952 (+/-0.104) for &#123;&apos;max_depth&apos;: 6, &apos;min_samples_leaf&apos;: 3&#125;</span><br><span class="line">0.933 (+/-0.096) for &#123;&apos;max_depth&apos;: 6, &apos;min_samples_leaf&apos;: 5&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 6, &apos;min_samples_leaf&apos;: 7&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 6, &apos;min_samples_leaf&apos;: 9&#125;</span><br><span class="line">0.933 (+/-0.047) for &#123;&apos;max_depth&apos;: 7, &apos;min_samples_leaf&apos;: 1&#125;</span><br><span class="line">0.952 (+/-0.104) for &#123;&apos;max_depth&apos;: 7, &apos;min_samples_leaf&apos;: 3&#125;</span><br><span class="line">0.933 (+/-0.096) for &#123;&apos;max_depth&apos;: 7, &apos;min_samples_leaf&apos;: 5&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 7, &apos;min_samples_leaf&apos;: 7&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 7, &apos;min_samples_leaf&apos;: 9&#125;</span><br><span class="line">0.952 (+/-0.057) for &#123;&apos;max_depth&apos;: 8, &apos;min_samples_leaf&apos;: 1&#125;</span><br><span class="line">0.952 (+/-0.104) for &#123;&apos;max_depth&apos;: 8, &apos;min_samples_leaf&apos;: 3&#125;</span><br><span class="line">0.933 (+/-0.096) for &#123;&apos;max_depth&apos;: 8, &apos;min_samples_leaf&apos;: 5&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 8, &apos;min_samples_leaf&apos;: 7&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 8, &apos;min_samples_leaf&apos;: 9&#125;</span><br><span class="line">0.952 (+/-0.058) for &#123;&apos;max_depth&apos;: 9, &apos;min_samples_leaf&apos;: 1&#125;</span><br><span class="line">0.952 (+/-0.104) for &#123;&apos;max_depth&apos;: 9, &apos;min_samples_leaf&apos;: 3&#125;</span><br><span class="line">0.933 (+/-0.096) for &#123;&apos;max_depth&apos;: 9, &apos;min_samples_leaf&apos;: 5&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 9, &apos;min_samples_leaf&apos;: 7&#125;</span><br><span class="line">0.905 (+/-0.084) for &#123;&apos;max_depth&apos;: 9, &apos;min_samples_leaf&apos;: 9&#125;</span><br><span class="line"></span><br><span class="line">Detailed classification report:</span><br><span class="line"></span><br><span class="line">The model is trained on the full development set.</span><br><span class="line">The scores are computed on the full evaluation set.</span><br><span class="line"></span><br><span class="line">             precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">          0       1.00      1.00      1.00        21</span><br><span class="line">          1       1.00      0.90      0.95        10</span><br><span class="line">          2       0.93      1.00      0.97        14</span><br><span class="line"></span><br><span class="line">avg / total       0.98      0.98      0.98        45</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/16/机器学习笔记-2/" rel="next" title="机器学习笔记-2（线性回归、逻辑回归入门）">
+                <i class="fa fa-chevron-left"></i> 机器学习笔记-2（线性回归、逻辑回归入门）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Tan Chu">
+            
+              <p class="site-author-name" itemprop="name">Tan Chu</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/UNIOPTER" title="GitHub &rarr; https://github.com/UNIOPTER" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/p/1005055644965979/home?from=page_100505&mod=TAB&is_all=1#place" title="Weibo &rarr; https://weibo.com/p/1005055644965979/home?from=page_100505&mod=TAB&is_all=1#place" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://space.bilibili.com/151461234" title="Bilibili &rarr; https://space.bilibili.com/151461234" rel="noopener" target="_blank"><i class="fa fa-fw fa-spinner"></i>Bilibili</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类算法评价指标"><span class="nav-number">1.</span> <span class="nav-text">分类算法评价指标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二维混淆矩阵"><span class="nav-number">1.1.</span> <span class="nav-text">二维混淆矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#错误率、准确率、精确率、召回率"><span class="nav-number">1.2.</span> <span class="nav-text">错误率、准确率、精确率、召回率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sklearn分类报告"><span class="nav-number">1.3.</span> <span class="nav-text">Sklearn分类报告</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型评估"><span class="nav-number">2.</span> <span class="nav-text">模型评估</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#留出法"><span class="nav-number">2.1.</span> <span class="nav-text">留出法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉验证法"><span class="nav-number">2.2.</span> <span class="nav-text">交叉验证法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KFold"><span class="nav-number">2.3.</span> <span class="nav-text">KFold</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型调参"><span class="nav-number">3.</span> <span class="nav-text">模型调参</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引用库"><span class="nav-number">3.1.</span> <span class="nav-text">引用库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出报告的函数"><span class="nav-number">3.2.</span> <span class="nav-text">输出报告的函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#载入鸢尾花数据集"><span class="nav-number">3.3.</span> <span class="nav-text">载入鸢尾花数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#决策树的分类和调参"><span class="nav-number">3.4.</span> <span class="nav-text">决策树的分类和调参</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tan Chu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="25,25,112" opacity="0.8" zindex="-1" count="200" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
