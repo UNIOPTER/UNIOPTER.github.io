@@ -97,6 +97,7 @@
 
 
   <meta name="description" content="分类算法评价指标 二维混淆矩阵$$\left[\begin{matrix}真正例(TP) &amp;amp; 假反例(FN)\\假正例(FP) &amp;amp; 真反例(TN)\end{matrix}\right]$$ 其实第对于二维混淆矩阵中的$a_{ij}$，指的是真实样本值为$i$，但是模型预测结果为$j$的个数  代码实现 12345678910from sklearn.metrics import c">
+<meta name="keywords" content="sklearn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习笔记-3（模型评估与调参入门）">
 <meta property="og:url" content="http://yoursite.com/2019/07/17/机器学习笔记-3/index.html">
@@ -104,7 +105,7 @@
 <meta property="og:description" content="分类算法评价指标 二维混淆矩阵$$\left[\begin{matrix}真正例(TP) &amp;amp; 假反例(FN)\\假正例(FP) &amp;amp; 真反例(TN)\end{matrix}\right]$$ 其实第对于二维混淆矩阵中的$a_{ij}$，指的是真实样本值为$i$，但是模型预测结果为$j$的个数  代码实现 12345678910from sklearn.metrics import c">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/07/17/机器学习笔记-3/1.png">
-<meta property="og:updated_time" content="2019-07-17T14:22:12.843Z">
+<meta property="og:updated_time" content="2019-07-18T14:38:27.333Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习笔记-3（模型评估与调参入门）">
 <meta name="twitter:description" content="分类算法评价指标 二维混淆矩阵$$\left[\begin{matrix}真正例(TP) &amp;amp; 假反例(FN)\\假正例(FP) &amp;amp; 真反例(TN)\end{matrix}\right]$$ 其实第对于二维混淆矩阵中的$a_{ij}$，指的是真实样本值为$i$，但是模型预测结果为$j$的个数  代码实现 12345678910from sklearn.metrics import c">
@@ -246,6 +247,23 @@
         
         
           
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
           <li class="menu-item menu-item-archives">
 
     
@@ -351,12 +369,24 @@
                 
               
 
-              <time title="创建时间：2019-07-17 21:40:46 / 修改时间：22:22:12" itemprop="dateCreated datePublished" datetime="2019-07-17T21:40:46+08:00">2019-07-17</time>
+              <time title="创建时间：2019-07-17 21:40:46" itemprop="dateCreated datePublished" datetime="2019-07-17T21:40:46+08:00">2019-07-17</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-18 22:38:27" itemprop="dateModified" datetime="2019-07-18T22:38:27+08:00">2019-07-18</time>
               
             
           </span>
@@ -447,17 +477,18 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> classification_report</span><br><span class="line">y_true =[<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>]</span><br><span class="line">y_pred = [<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>]</span><br><span class="line">target_names = [<span class="string">'class 0'</span>, <span class="string">'class 1'</span>]</span><br><span class="line"></span><br><span class="line">report = classification_report(y_true, y_pred, target_names=target_names)</span><br><span class="line">print(report)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">     		 precision    recall  f1-score   support</span></span><br><span class="line"><span class="string">    class 0       1.00      0.67      0.80         3</span></span><br><span class="line"><span class="string">    class 1       0.50      1.00      0.67         1</span></span><br><span class="line"><span class="string">  avg/total       0.88      0.75      0.77         4</span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
 <h2 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h2><hr>
 <h3 id="留出法"><a href="#留出法" class="headerlink" title="留出法"></a>留出法</h3><p>将原始数据直接划分为互斥的两类，其中一部分用来训练模型，另外一部分用来测试。</p>
-<p>前者是训练集，后者是测试集。</p>
+<p>前者是训练集，后者是测试集，只进行一次测试和训练。</p>
 <p>在sklearn当中，使用train_test_split可以将数据分为训练集和测试集。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris <span class="comment"># iris数据集</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split <span class="comment"># 分割数据模块</span></span><br><span class="line"></span><br><span class="line">iris = load_iris()</span><br><span class="line">X = iris.data</span><br><span class="line">y = iris.target</span><br><span class="line"></span><br><span class="line"><span class="comment">#对数据集进行快速打乱（分为训练集和测试集）</span></span><br><span class="line"><span class="comment"># 对数据集进行了shuffle后按照给定的test_size 进行数据集划分</span></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=<span class="number">4</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="交叉验证法"><a href="#交叉验证法" class="headerlink" title="交叉验证法"></a>交叉验证法</h3><p>交叉验证的基本思想是：将数据集进行一系列分割，生成一组不同的训练测试集，然后分别训练模型并计算测试准确率，最后对结果进行平均处理。这样来有效降低测试准确率的差异。</p>
+<p>比如我们将模型划分为5部分，第一次用前20%做测试集，后80%做训练集；那么第二次就用20%-40%的部分做测试集，剩下的做训练集；这样分别进行五次训练和测试，最后对结果求平均值，得到模型评估的最终结果。</p>
 <p><img src="/2019/07/17/机器学习笔记-3/1.png" alt="1"></p>
-<p>比如上面，我们将数据集分为5折，做一次交叉验证，实际上它是计算了5次，将每一折都当做一次测试集，其余四折当做训练集，这样循环五次。通过传入的模型，训练五次，最后将五次结果求平均值。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> cross_val_score <span class="comment"># K折交叉验证模块</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用K折交叉验证模块</span></span><br><span class="line"><span class="comment">#对数据集进行指定次数的交叉验证并为每次验证效果评测</span></span><br><span class="line"><span class="comment"># cv  默认使用KFold 或StratifiedKFold 进行数据集打乱</span></span><br><span class="line">scores = cross_val_score(knn,X,y,scoring=<span class="string">'accuracy'</span>,cv=<span class="number">10</span>) <span class="comment"># 内部已经做了训练和测试 与以往的留出法有所区别</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#将5次的预测准确率打印出</span></span><br><span class="line">print(scores)</span><br><span class="line"><span class="comment"># [ 0.96666667 1.  0.93333333  0.96666667  1.]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#将5次的预测准确平均率打印出</span></span><br><span class="line">print(scores.mean())</span><br><span class="line"><span class="comment"># 0.973333333333</span></span><br></pre></td></tr></table></figure>
 <h3 id="KFold"><a href="#KFold" class="headerlink" title="KFold"></a>KFold</h3><p>K折交叉验证，这是将数据集分成K份的方案，所谓K折就是将数据集通过K次分割，使得所有数据既在训练集出现过，又在测试集出现过，当然，每次分割中不会有重叠。相当于无放回抽样。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> KFold</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">X = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>,<span class="string">'e'</span>]</span><br><span class="line">kf = KFold(n_splits=<span class="number">3</span>)   <span class="comment"># 三次分割</span></span><br><span class="line">kf.split(X)  <span class="comment"># 生成的是类似range的东西</span></span><br><span class="line"><span class="keyword">for</span> train, test <span class="keyword">in</span> kf.split(X):</span><br><span class="line">    print(train,test) <span class="comment"># 对应的下标</span></span><br><span class="line">    print(np.array(X)[train])</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[2 3 4] [0 1]</span></span><br><span class="line"><span class="string">['c' 'd' 'e']</span></span><br><span class="line"><span class="string">[0 1 4] [2 3]</span></span><br><span class="line"><span class="string">['a' 'b' 'e']</span></span><br><span class="line"><span class="string">[0 1 2 3] [4]</span></span><br><span class="line"><span class="string">['a' 'b' 'c' 'd']</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
 <h2 id="模型调参"><a href="#模型调参" class="headerlink" title="模型调参"></a>模型调参</h2><hr>
 <p>利用网格搜索（GridSearchCV）和随机搜索（RandomizedSearchCV）实现参数的合适选取。</p>
+<p>基本原理就是事先设置好一个参数列表，然后利用暴力或者随机选取一些来进行测试，把结果最好的设置成best_params并返回。</p>
 <p>这里直接给出Sklearn的代码。</p>
 <h3 id="引用库"><a href="#引用库" class="headerlink" title="引用库"></a>引用库</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris  <span class="comment"># 自带的样本数据集</span></span><br><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier  <span class="comment"># 要估计的是knn里面的参数，包括k的取值和样本权重分布方式</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV,RandomizedSearchCV  <span class="comment"># 网格搜索和随机搜索</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> classification_report</span><br></pre></td></tr></table></figure>
 <h3 id="输出报告的函数"><a href="#输出报告的函数" class="headerlink" title="输出报告的函数"></a>输出报告的函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">out</span><span class="params">(clf)</span>:</span></span><br><span class="line">    print(<span class="string">"Best parameters set found on development set:"</span>)</span><br><span class="line">    print()</span><br><span class="line">    print(clf.best_params_)</span><br><span class="line">    print()</span><br><span class="line"></span><br><span class="line">    print(<span class="string">"Grid scores on development set:"</span>)</span><br><span class="line">    print()</span><br><span class="line">    means = clf.cv_results_[<span class="string">'mean_test_score'</span>]</span><br><span class="line">    stds = clf.cv_results_[<span class="string">'std_test_score'</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> mean, std, params <span class="keyword">in</span> zip(means, stds, clf.cv_results_[<span class="string">'params'</span>]):    </span><br><span class="line">        print(<span class="string">"%0.3f (+/-%0.03f) for %r"</span> % (mean, std * <span class="number">2</span>, params))</span><br><span class="line">    print()</span><br><span class="line"></span><br><span class="line">    print(<span class="string">"Detailed classification report:"</span>)</span><br><span class="line">    print()</span><br><span class="line">    print(<span class="string">"The model is trained on the full development set."</span>)</span><br><span class="line">    print(<span class="string">"The scores are computed on the full evaluation set."</span>)</span><br><span class="line">    print()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 注意最后利用测试集展示的才是泛化误差</span></span><br><span class="line">    y_true, y_pred = y_test, clf.predict(X_test)</span><br><span class="line">    print(classification_report(y_true, y_pred))</span><br><span class="line">    print()</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure>
@@ -484,6 +515,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sklearn/" rel="tag"># sklearn</a>
+          
+        </div>
       
 
       
@@ -577,7 +614,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -604,6 +641,25 @@
                 </div>
               
 
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
               
             </nav>
           
