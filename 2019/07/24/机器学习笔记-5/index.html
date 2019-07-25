@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="GAN结构 ​    生成器（Generator）：捕捉真实数据样本的潜在分布, 并生成新的数据样本； ​    判别器（Discriminator）：二分类器, 判别输入是真实数据还是生成的样本； ​    生成器的输入：随机噪声，生成器依据噪声的特征生成图片； ​    判别器的输出：对于每一张图片，输出一个值，用于判断这张图片是真还是假； ​    误区纠正：简单的GAN中，判别器输出的只是">
+<meta name="keywords" content="tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习笔记-5（GAN、DCGAN）">
+<meta property="og:url" content="http://yoursite.com/2019/07/24/机器学习笔记-5/index.html">
+<meta property="og:site_name" content="Tan Chu&#39;s blog">
+<meta property="og:description" content="GAN结构 ​    生成器（Generator）：捕捉真实数据样本的潜在分布, 并生成新的数据样本； ​    判别器（Discriminator）：二分类器, 判别输入是真实数据还是生成的样本； ​    生成器的输入：随机噪声，生成器依据噪声的特征生成图片； ​    判别器的输出：对于每一张图片，输出一个值，用于判断这张图片是真还是假； ​    误区纠正：简单的GAN中，判别器输出的只是">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/07/24/机器学习笔记-5/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/24/机器学习笔记-5/2.png">
+<meta property="og:updated_time" content="2019-07-25T11:32:17.680Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习笔记-5（GAN、DCGAN）">
+<meta name="twitter:description" content="GAN结构 ​    生成器（Generator）：捕捉真实数据样本的潜在分布, 并生成新的数据样本； ​    判别器（Discriminator）：二分类器, 判别输入是真实数据还是生成的样本； ​    生成器的输入：随机噪声，生成器依据噪声的特征生成图片； ​    判别器的输出：对于每一张图片，输出一个值，用于判断这张图片是真还是假； ​    误区纠正：简单的GAN中，判别器输出的只是">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/24/机器学习笔记-5/1.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/07/24/机器学习笔记-5/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>机器学习笔记-5（GAN、DCGAN） | Tan Chu's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tan Chu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/24/机器学习笔记-5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tan Chu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tan Chu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">机器学习笔记-5（GAN、DCGAN）
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-24 21:40:46" itemprop="dateCreated datePublished" datetime="2019-07-24T21:40:46+08:00">2019-07-24</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-25 19:32:17" itemprop="dateModified" datetime="2019-07-25T19:32:17+08:00">2019-07-25</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/机器学习/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="GAN结构"><a href="#GAN结构" class="headerlink" title="GAN结构"></a>GAN结构</h2><hr>
+<p>​    生成器（Generator）：捕捉真实数据样本的潜在分布, 并生成新的数据样本；</p>
+<p>​    判别器（Discriminator）：二分类器, 判别输入是真实数据还是生成的样本；</p>
+<p>​    生成器的输入：随机噪声，生成器依据噪声的特征生成图片；</p>
+<p>​    判别器的输出：对于每一张图片，输出一个值，用于判断这张图片是真还是假；</p>
+<p>​    <strong>误区纠正</strong>：简单的GAN中，判别器输出的只是一个值（用于判断图片的真假），而之前多分类问题判决器输出一个向量，注意区分</p>
+<a id="more"></a>
+<p><img src="/2019/07/24/机器学习笔记-5/1.png" alt="1"></p>
+<h2 id="GAN的工作流程"><a href="#GAN的工作流程" class="headerlink" title="GAN的工作流程"></a>GAN的工作流程</h2><hr>
+<p>用Process On画的流程图如下</p>
+<p><img src="/2019/07/24/机器学习笔记-5/2.png" alt="2"></p>
+<p>$pic[x,y]$（x张真实图片）传入判别器，输出$real[x,1]$（这边类似做多分类的输出，但是有所区别，其实这边可以看做区分真假的二分类问题）；</p>
+<p>$noise[x,p]$（x个大小为p的噪声）传入生成器，生成器输出$[x,y]$的数组（x张大小和真实图片大小相同的假图片）；</p>
+<p>$[x,y]$大小的假图片传入判别器，输出一个$fake[x,1]$；</p>
+<p>我们设1表示真图，0表示假图：</p>
+<p>那么判别器$D$要判断$real$为1，$fake$为0，故<br>$$<br>loss_D=CrossEntropy(real,1)+CrossEntropy(fake,0)<br>$$</p>
+<p>而生成器$G$要使得$fake$被识别为真，也就是使得$fake$接近1，故<br>$$<br>loss_G=CrossEntropy(fake,1)<br>$$</p>
+<p>使用Adam优化$loss_D$和$loss_G$即可</p>
+<h2 id="以MNIST为例实现简单的DCGAN"><a href="#以MNIST为例实现简单的DCGAN" class="headerlink" title="以MNIST为例实现简单的DCGAN"></a>以MNIST为例实现简单的DCGAN</h2><hr>
+<h3 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> imageio  <span class="comment"># 读取图片</span></span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line"></span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">'MNIST_data'</span>)</span><br><span class="line"></span><br><span class="line">batch_size = <span class="number">100</span>  <span class="comment"># 迭代样本数</span></span><br><span class="line">z_dim = <span class="number">100</span>  <span class="comment"># 噪音的维度100</span></span><br><span class="line">OUTPUT_DIR = <span class="string">'samples'</span>  <span class="comment"># 输出文件</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(OUTPUT_DIR):</span><br><span class="line">    os.mkdir(OUTPUT_DIR)</span><br><span class="line">X = tf.placeholder(dtype=tf.float32, shape=[<span class="literal">None</span>, <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>], name=<span class="string">'X'</span>)</span><br><span class="line">noise = tf.placeholder(dtype=tf.float32, shape=[<span class="literal">None</span>, z_dim], name=<span class="string">'noise'</span>)</span><br><span class="line">is_training = tf.placeholder(dtype=tf.bool, name=<span class="string">'is_training'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="激活函数和交叉熵函数"><a href="#激活函数和交叉熵函数" class="headerlink" title="激活函数和交叉熵函数"></a>激活函数和交叉熵函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lrelu</span><span class="params">(x, leak=<span class="number">0.2</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> tf.maximum(x, leak * x)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid_cross_entropy_with_logits</span><span class="params">(x, y)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> tf.nn.sigmoid_cross_entroy_with_logits(logits=x, labels=y)</span><br></pre></td></tr></table></figure>
+<h3 id="判别器"><a href="#判别器" class="headerlink" title="判别器"></a>判别器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">discriminator</span><span class="params">(image, reuse=None, is_training=is_training)</span>:</span></span><br><span class="line">    momentum = <span class="number">0.9</span></span><br><span class="line">    <span class="keyword">with</span> tf.variable_scope(<span class="string">'discriminator'</span>, reuse=reuse):  <span class="comment"># 划分区域</span></span><br><span class="line">        h0 = lrelu(tf.layers.conv2d(image, kernel_size=<span class="number">5</span>, </span><br><span class="line">                   filters=<span class="number">64</span>, strides=<span class="number">2</span>, padding=<span class="string">'same'</span>))  <span class="comment"># 输入一张图片</span></span><br><span class="line"></span><br><span class="line">        h1 = tf.layers.conv2d(h0, kernel_size=<span class="number">5</span>, filters=<span class="number">128</span>, </span><br><span class="line">                              strides=<span class="number">2</span>, padding=<span class="string">'same'</span>)</span><br><span class="line">        h1 = lrelu(tf.contrib.layers.batch_norm(h1, is_training=is_training,</span><br><span class="line">                                              decay=momentum))  <span class="comment"># BN在激活函数之前</span></span><br><span class="line"></span><br><span class="line">        h2 = tf.layers.conv2d(h1, kernel_size=<span class="number">5</span>, filters=<span class="number">256</span>, </span><br><span class="line">                              strides=<span class="number">2</span>, padding=<span class="string">'same'</span>)</span><br><span class="line">        h2 = lrelu(tf.contrib.layers.batch_norm(h2, is_training=is_training, </span><br><span class="line">                                                decay=momentum))</span><br><span class="line"></span><br><span class="line">        h3 = tf.layers.conv2d(h2, kernel_size=<span class="number">5</span>, filters=<span class="number">512</span>, </span><br><span class="line">                              strides=<span class="number">2</span>, padding=<span class="string">'same'</span>)</span><br><span class="line">        h3 = lrelu(tf.contrib.layers.batch_norm(h3, is_training=is_training, </span><br><span class="line">                                                decay=momentum))</span><br><span class="line"></span><br><span class="line">        h4 = tf.contrib.layers.flatten(h3)  <span class="comment"># 全连接前的处理，第一维度，二三四维度相乘为一个向量</span></span><br><span class="line">        h4 = tf.layers.dense(h4, units=<span class="number">1</span>)  <span class="comment"># 全连接层</span></span><br><span class="line">        <span class="keyword">return</span> tf.nn.sigmoid(h4), h4</span><br></pre></td></tr></table></figure>
+<h3 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generator</span><span class="params">(z, is_training=is_training)</span>:</span></span><br><span class="line">    momentum = <span class="number">0.9</span></span><br><span class="line">    <span class="keyword">with</span> tf.variable_scope(<span class="string">'generator'</span>, reuse=<span class="literal">None</span>):</span><br><span class="line">        d = <span class="number">3</span></span><br><span class="line">        h0 = tf.layers.dense(z, units=d * d * <span class="number">512</span>)</span><br><span class="line">        h0 = tf.reshape(h0, shape=[<span class="number">-1</span>, d, d, <span class="number">512</span>])</span><br><span class="line">        h0 = tf.nn.relu(tf.contrib.layers.batch_norm(h0, is_training=is_training,</span><br><span class="line">                                                     decay=momentum))</span><br><span class="line"></span><br><span class="line">        h1 = tf.layers.conv2d_transpose(h0, kernel_size=<span class="number">5</span>, filters=<span class="number">256</span>, </span><br><span class="line">                                        strides=<span class="number">2</span>, padding=<span class="string">'same'</span>)</span><br><span class="line">        h1 = tf.nn.relu(tf.contrib.layers.batch_norm(h1, is_training=is_training, </span><br><span class="line">                                                     decay=momentum))</span><br><span class="line"></span><br><span class="line">        h2 = tf.layers.conv2d_transpose(h1, kernel_size=<span class="number">5</span>, filters=<span class="number">128</span>,</span><br><span class="line">                                        strides=<span class="number">2</span>, padding=<span class="string">'same'</span>)</span><br><span class="line">        h2 = tf.nn.relu(tf.contrib.layers.batch_norm(h2, is_training=is_training, </span><br><span class="line">                                                     decay=momentum))</span><br><span class="line"></span><br><span class="line">        h3 = tf.layers.conv2d_transpose(h2, kernel_size=<span class="number">5</span>, filters=<span class="number">64</span>, </span><br><span class="line">                                        strides=<span class="number">2</span>, padding=<span class="string">'same'</span>)</span><br><span class="line">        h3 = tf.nn.relu(tf.contrib.layers.batch_norm(h3, is_training=is_training,</span><br><span class="line">                                                     decay=momentum))</span><br><span class="line"></span><br><span class="line">        h4 = tf.layers.conv2d_transpose(h3, kernel_size=<span class="number">5</span>, filters=<span class="number">1</span>,			                          strides=<span class="number">1</span>,padding=<span class="string">'valid'</span>,activation=tf.nn.tanh,name=<span class="string">'g'</span>)</span><br><span class="line">        <span class="keyword">return</span> h4</span><br></pre></td></tr></table></figure>
+<h3 id="损失函数和优化器"><a href="#损失函数和优化器" class="headerlink" title="损失函数和优化器"></a>损失函数和优化器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义损失函数，虽然是两个部分，但是参数是共享的</span></span><br><span class="line">g = generator(noise)</span><br><span class="line">d_real, d_real_logits = discriminator(X)  <span class="comment"># 真实样本</span></span><br><span class="line">d_fake, d_fake_logits = discriminator(g, reuse=<span class="literal">True</span>)  <span class="comment"># 参数共享</span></span><br><span class="line"></span><br><span class="line">vars_g = [var <span class="keyword">for</span> var <span class="keyword">in</span> tf.trainable_variables() <span class="keyword">if</span> var.name.startswith(<span class="string">'generator'</span>)]</span><br><span class="line">vars_d = [var <span class="keyword">for</span> var <span class="keyword">in</span> tf.trainable_variables() <span class="keyword">if</span> var.name.startswith(<span class="string">'discriminator'</span>)]</span><br><span class="line"></span><br><span class="line">loss_d_real = tf.reduce_mean(sigmoid_cross_entropy_with_logits(d_real_logits, tf.ones_like(d_real)))</span><br><span class="line">loss_d_fake = tf.reduce_mean(sigmoid_cross_entropy_with_logits(d_fake_logits, tf.zeros_like(d_fake)))  <span class="comment"># 真实数据和假的数据</span></span><br><span class="line">loss_g = tf.reduce_mean(sigmoid_cross_entropy_with_logits(d_fake_logits, tf.ones_like(d_fake)))  <span class="comment"># 生成器的损失函数</span></span><br><span class="line">loss_d = loss_d_real + loss_d_fake  <span class="comment"># 判别器的损失函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义优化函数注意损失函数需要和可调参数对应上</span></span><br><span class="line">update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)</span><br><span class="line"><span class="keyword">with</span> tf.control_dependencies(update_ops):  <span class="comment"># 先执行BN参数更新，根据每一批的均值和方差去估计整个数据的均值和方差</span></span><br><span class="line">    optimizer_d = tf.train.AdamOptimizer(learning_rate=<span class="number">0.0002</span>, beta1=<span class="number">0.5</span>).minimize(loss_d, var_list=vars_d)</span><br><span class="line">    optimizer_g = tf.train.AdamOptimizer(learning_rate=<span class="number">0.0002</span>, beta1=<span class="number">0.5</span>).minimize(loss_g, var_list=vars_g)</span><br></pre></td></tr></table></figure>
+<h3 id="模型的训练与展示"><a href="#模型的训练与展示" class="headerlink" title="模型的训练与展示"></a>模型的训练与展示</h3><p>注意这里是在每次迭代的时候训练一次判别器，再训练两次生成器</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义一个辅助函数，用于将多张图片以网格状拼在一起显示</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">montage</span><span class="params">(images)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> isinstance(images, list):</span><br><span class="line">        images = np.array(images)</span><br><span class="line">    img_h = images.shape[<span class="number">1</span>]</span><br><span class="line">    img_w = images.shape[<span class="number">2</span>]</span><br><span class="line">    n_plots = int(np.sqrt(images.shape[<span class="number">0</span>]))</span><br><span class="line">    m = np.ones((images.shape[<span class="number">1</span>] * n_plots + <span class="number">1</span>, images.shape[<span class="number">2</span>] * n_plots + <span class="number">1</span>)) * <span class="number">0.5</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n_plots):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(n_plots):</span><br><span class="line">            this_filter = i * n_plots + j</span><br><span class="line">            <span class="keyword">if</span> this_filter &lt; images.shape[<span class="number">0</span>]:</span><br><span class="line">                this_img = images[this_filter]</span><br><span class="line">                m[<span class="number">1</span> + i + i * img_h:<span class="number">1</span> + i + (i + <span class="number">1</span>) * img_h, <span class="number">1</span> + j + j * img_w:<span class="number">1</span> + j + (j + <span class="number">1</span>) * img_w] = this_img</span><br><span class="line">    <span class="keyword">return</span> m</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始训练模型，G更新两次</span></span><br><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(tf.global_variables_initializer())</span><br><span class="line">z_samples = np.random.uniform(<span class="number">-1.0</span>, <span class="number">1.0</span>, [batch_size, z_dim]).astype(np.float32)</span><br><span class="line"></span><br><span class="line">samples = []</span><br><span class="line">loss = &#123;<span class="string">'d'</span>: [], <span class="string">'g'</span>: []&#125;</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">600</span>):</span><br><span class="line">    n = np.random.uniform(<span class="number">-1.0</span>, <span class="number">1.0</span>, [batch_size, z_dim]).astype(np.float32)</span><br><span class="line">    batch = mnist.train.next_batch(batch_size=batch_size)[<span class="number">0</span>]  <span class="comment"># 样本和标签</span></span><br><span class="line">    batch = np.reshape(batch, [<span class="number">-1</span>, <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>])</span><br><span class="line">    batch = (batch - <span class="number">0.5</span>) * <span class="number">2</span>  <span class="comment"># 【-1，1】</span></span><br><span class="line">    d_ls, g_ls = sess.run([loss_d, loss_g], feed_dict=&#123;X: batch, noise: n, is_training: <span class="literal">True</span>&#125;)  <span class="comment"># 训练中</span></span><br><span class="line">    loss[<span class="string">'d'</span>].append(d_ls)</span><br><span class="line">    loss[<span class="string">'g'</span>].append(g_ls)</span><br><span class="line"></span><br><span class="line">    sess.run(optimizer_d, feed_dict=&#123;X: batch, noise: n, is_training: <span class="literal">True</span>&#125;)  <span class="comment"># 优化</span></span><br><span class="line">    sess.run(optimizer_g, feed_dict=&#123;X: batch, noise: n, is_training: <span class="literal">True</span>&#125;)</span><br><span class="line">    sess.run(optimizer_g, feed_dict=&#123;X: batch, noise: n, is_training: <span class="literal">True</span>&#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">50</span> == <span class="number">0</span>:</span><br><span class="line">        print(i, d_ls, g_ls)  <span class="comment"># 输出损失函数</span></span><br><span class="line">        gen_imgs = sess.run(g, feed_dict=&#123;noise: z_samples, is_training: <span class="literal">False</span>&#125;)  <span class="comment"># 用生成器生成图片，噪音保持不变</span></span><br><span class="line">        gen_imgs = (gen_imgs + <span class="number">1</span>) / <span class="number">2</span></span><br><span class="line">        imgs = [img[:, :, <span class="number">0</span>] <span class="keyword">for</span> img <span class="keyword">in</span> gen_imgs]</span><br><span class="line">        gen_imgs = montage(imgs)</span><br><span class="line">        plt.axis(<span class="string">'off'</span>)</span><br><span class="line">        plt.imshow(gen_imgs, cmap=<span class="string">'gray'</span>)</span><br><span class="line">        plt.savefig(os.path.join(OUTPUT_DIR, <span class="string">'sample_%d.jpg'</span> % i))</span><br><span class="line">        plt.show()</span><br><span class="line">        samples.append(gen_imgs)</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">plt.plot(loss[<span class="string">'d'</span>], label=<span class="string">'Discriminator'</span>)</span><br><span class="line">plt.plot(loss[<span class="string">'g'</span>], label=<span class="string">'Generator'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper right'</span>)</span><br><span class="line">plt.savefig(<span class="string">'Loss.png'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tensorflow/" rel="tag"># tensorflow</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/19/python爬虫基础-1/" rel="next" title="python爬虫基础-1">
+                <i class="fa fa-chevron-left"></i> python爬虫基础-1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Tan Chu">
+            
+              <p class="site-author-name" itemprop="name">Tan Chu</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/UNIOPTER" title="GitHub &rarr; https://github.com/UNIOPTER" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/p/1005055644965979/home?from=page_100505&mod=TAB&is_all=1#place" title="Weibo &rarr; https://weibo.com/p/1005055644965979/home?from=page_100505&mod=TAB&is_all=1#place" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://space.bilibili.com/151461234" title="Bilibili &rarr; https://space.bilibili.com/151461234" rel="noopener" target="_blank"><i class="fa fa-fw fa-spinner"></i>Bilibili</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#GAN结构"><span class="nav-number">1.</span> <span class="nav-text">GAN结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GAN的工作流程"><span class="nav-number">2.</span> <span class="nav-text">GAN的工作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#以MNIST为例实现简单的DCGAN"><span class="nav-number">3.</span> <span class="nav-text">以MNIST为例实现简单的DCGAN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#预处理"><span class="nav-number">3.1.</span> <span class="nav-text">预处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#激活函数和交叉熵函数"><span class="nav-number">3.2.</span> <span class="nav-text">激活函数和交叉熵函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判别器"><span class="nav-number">3.3.</span> <span class="nav-text">判别器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成器"><span class="nav-number">3.4.</span> <span class="nav-text">生成器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数和优化器"><span class="nav-number">3.5.</span> <span class="nav-text">损失函数和优化器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型的训练与展示"><span class="nav-number">3.6.</span> <span class="nav-text">模型的训练与展示</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tan Chu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="25,25,112" opacity="0.8" zindex="-1" count="200" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
