@@ -113,7 +113,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/06/06/操作系统实验-文件描述符/7.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/06/操作系统实验-文件描述符/8.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/06/操作系统实验-文件描述符/9.png">
-<meta property="og:updated_time" content="2020-06-07T02:24:59.469Z">
+<meta property="og:updated_time" content="2020-06-25T18:06:34.758Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="操作系统实验 - 文件描述符">
 <meta name="twitter:description" content="操作系统实验 - 文件描述符需要的头文件1234#include &amp;lt;sys/types.h&amp;gt;#include &amp;lt;sys/stat.h&amp;gt;#include &amp;lt;fcntl.h&amp;gt;#include &amp;lt;unistd.h&amp;gt; 定义一个非负整数，file descriptor，简写为fd； 打开现存文件或新建文件时，内核会返回一个文件描述符； 读写文件也需要使用文件描">
@@ -394,7 +394,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-06-07 10:24:59" itemprop="dateModified" datetime="2020-06-07T10:24:59+08:00">2020-06-07</time>
+                <time title="修改时间：2020-06-26 02:06:34" itemprop="dateModified" datetime="2020-06-26T02:06:34+08:00">2020-06-26</time>
               
             
           </span>
@@ -491,7 +491,7 @@
 </ul>
 <p><img src="/2020/06/06/操作系统实验-文件描述符/2.png" alt="2"></p>
 <p>文件描述符表对进程来说是私有的，每个进程都有一个私有的文件描述符表；</p>
-<p>操作系统有N个进程，则对应有N张文件描述符表；</p>
+<p>操作系统有N个进程，则对应有N张文件描述符表，每个进程都有一个文件描述符表；</p>
 <p>两个进程打开不同的文件，文件描述符可能是相同的；</p>
 <p>进程A打开文件a.txt，open返回值是3，进程B打开文件b.txt，open返回值也可能是3；</p>
 <h3 id="标准输入输出"><a href="#标准输入输出" class="headerlink" title="标准输入输出"></a>标准输入输出</h3><p><img src="/2020/06/06/操作系统实验-文件描述符/3.png" alt="3"></p>
@@ -575,6 +575,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2020/07/10/操作系统实验报告/" rel="prev" title="操作系统实验报告">
+                操作系统实验报告 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -644,7 +648,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

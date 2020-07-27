@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="操作系统实验报告学号：161710135 姓名：朱天齐 指导老师：朱广蔚">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统实验报告">
+<meta property="og:url" content="http://yoursite.com/2020/07/10/操作系统实验报告/index.html">
+<meta property="og:site_name" content="Tan Chu&#39;s blog">
+<meta property="og:description" content="操作系统实验报告学号：161710135 姓名：朱天齐 指导老师：朱广蔚">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2020/07/10/操作系统实验报告/5.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/10/操作系统实验报告/6.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/10/操作系统实验报告/p1.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/10/操作系统实验报告/p2.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/10/操作系统实验报告/p3.png">
+<meta property="og:updated_time" content="2020-07-27T12:42:12.315Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="操作系统实验报告">
+<meta name="twitter:description" content="操作系统实验报告学号：161710135 姓名：朱天齐 指导老师：朱广蔚">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/10/操作系统实验报告/5.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2020/07/10/操作系统实验报告/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>操作系统实验报告 | Tan Chu's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tan Chu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/10/操作系统实验报告/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tan Chu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tan Chu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">操作系统实验报告
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-07-10 19:57:46" itemprop="dateCreated datePublished" datetime="2020-07-10T19:57:46+08:00">2020-07-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-07-27 20:42:12" itemprop="dateModified" datetime="2020-07-27T20:42:12+08:00">2020-07-27</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程语言/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="操作系统实验报告"><a href="#操作系统实验报告" class="headerlink" title="操作系统实验报告"></a>操作系统实验报告</h1><p>学号：161710135</p>
+<p>姓名：朱天齐</p>
+<p>指导老师：朱广蔚</p>
+<a id="more"></a>
+<hr>
+<h2 id="文件读写编程题目"><a href="#文件读写编程题目" class="headerlink" title="文件读写编程题目"></a>文件读写编程题目</h2><h3 id="myecho-c"><a href="#myecho-c" class="headerlink" title="myecho.c"></a>myecho.c</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><ul>
+<li><p>myecho.c的功能与系统echo程序相同</p>
+</li>
+<li><p>接受命令行参数，并将参数打印出来，例子如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ./myecho x</span><br><span class="line">x</span><br><span class="line">$ ./myecho a b c</span><br><span class="line">a b c</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h4><p><code>int main(int argv,char *argc[])</code></p>
+<p><code>argv</code>表示命令行的参数个数</p>
+<p><code>*argc[]</code>表示命令行输入的字符串序列</p>
+<p>所以本题的话直接把命令行输入的<code>./myecho</code>之后的字符串全输出即可</p>
+<h4 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argv,<span class="keyword">char</span> *argc[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">1</span>; i&lt;argv; i++) <span class="built_in">printf</span>(<span class="string">"%s "</span>,argc[i]);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="mycat-c"><a href="#mycat-c" class="headerlink" title="mycat.c"></a>mycat.c</h3><h4 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><ul>
+<li><p>mycat.c的功能与系统cat程序相同</p>
+</li>
+<li><p>mycat将指定的文件内容输出到屏幕，例子如下：</p>
+</li>
+<li><p>要求使用系统调用open/read/write/close实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/passwd </span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span><br><span class="line">bin:x:2:2:bin:/bin:/usr/sbin/nologin</span><br><span class="line">...</span><br><span class="line">$ ./mycat /etc/passwd </span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span><br><span class="line">bin:x:2:2:bin:/bin:/usr/sbin/nologin</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="实现思路-1"><a href="#实现思路-1" class="headerlink" title="实现思路"></a>实现思路</h4><p>命令行输入的第二个参数是目录名，也就是<code>argc[1]</code></p>
+<p>按照目录名以<code>O_RDWR</code>读写方式打开，之后逐行读取字符串，输出在屏幕上即可</p>
+<p>注意设置模式<code>mode_t mode=0777</code>为可读可写可执行，否则会可能出现错误</p>
+<h4 id="具体实现-1"><a href="#具体实现-1" class="headerlink" title="具体实现"></a>具体实现</h4><p>读写方式打开文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> fd;</span><br><span class="line"><span class="keyword">mode_t</span> mode=<span class="number">0777</span>;</span><br><span class="line">fd=open(argc[<span class="number">1</span>],O_RDWR,mode);</span><br><span class="line"><span class="keyword">if</span> (fd&lt;<span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">"error"</span>);</span><br></pre></td></tr></table></figure>
+<p>逐行从文件中读入，然后输出到屏幕上</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> buf[<span class="number">256</span>];</span><br><span class="line"><span class="keyword">int</span> tmp;</span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">    tmp=read(fd,buf,<span class="keyword">sizeof</span>(buf));</span><br><span class="line">    <span class="keyword">if</span> (tmp==<span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s"</span>,buf);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="mycp-c"><a href="#mycp-c" class="headerlink" title="mycp.c"></a>mycp.c</h3><h4 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><ul>
+<li><p>mycp.c的功能与系统cp程序相同</p>
+</li>
+<li><p>将源文件复制到目标文件，例子如下：</p>
+</li>
+<li><p>要求使用系统调用open/read/write/close实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/passwd</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span><br><span class="line">bin:x:2:2:bin:/bin:/usr/sbin/nologin</span><br><span class="line">...</span><br><span class="line">$ ./mycp /etc/passwd passwd.bak </span><br><span class="line">$ cat passwd.bak</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span><br><span class="line">bin:x:2:2:bin:/bin:/usr/sbin/nologin</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="实现思路-2"><a href="#实现思路-2" class="headerlink" title="实现思路"></a>实现思路</h4><p><code>argc[1]</code>和<code>argc[2]</code>表示源文件和目标文件的路径</p>
+<p>源文件以<code>O_RDWR</code>读写形式打开</p>
+<p>目标文件以<code>O_RDWR</code>读写方式打开，但是考虑到目标文件可能一开始不存在，所以要加一个<code>O_CREAT</code>参数</p>
+<p>当这两个文件均打开之后，我们只要逐行从源文件读取字符串，然后输出到目标文件中即可</p>
+<h4 id="具体实现-2"><a href="#具体实现-2" class="headerlink" title="具体实现"></a>具体实现</h4><p>打开源文件和目标文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> fd1,fd2;</span><br><span class="line"><span class="keyword">mode_t</span> mode=<span class="number">0777</span>;</span><br><span class="line">fd1=open(argc[<span class="number">1</span>],O_RDWR,mode);</span><br><span class="line">fd2=open(argc[<span class="number">2</span>],O_RDWR |  O_CREAT,mode);</span><br><span class="line"><span class="keyword">if</span> (fd1&lt;<span class="number">0</span> || fd2&lt;<span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">"error"</span>);</span><br></pre></td></tr></table></figure>
+<p>从源文件中逐行读入</p>
+<p>然后将读入的字符串写入到目标文件中</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> buf[<span class="number">256</span>];</span><br><span class="line"><span class="keyword">int</span> tmp;</span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">      tmp=read(fd1,buf,<span class="keyword">sizeof</span>(buf));</span><br><span class="line">      <span class="keyword">if</span> (tmp==<span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">      write(fd2,buf,<span class="keyword">sizeof</span>(buf));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div style="page-break-after: always;"></div>
+
+<h2 id="多进程题目"><a href="#多进程题目" class="headerlink" title="多进程题目"></a>多进程题目</h2><h3 id="mysys-c"><a href="#mysys-c" class="headerlink" title="mysys.c"></a>mysys.c</h3><h4 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h4><p>实现函数mysys，用于执行一个系统命令，要求如下</p>
+<ul>
+<li><p>mysys的功能与系统函数system相同，要求用进程管理相关系统调用自己实现一遍</p>
+</li>
+<li><p><strong>使用fork/exec/wait系统调用实现mysys</strong></p>
+</li>
+<li><p>不能通过调用系统函数system实现mysys</p>
+</li>
+<li><p>测试程序</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mysys</span><span class="params">(<span class="keyword">char</span> *command)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    实现该函数，该函数执行一条命令，并等待该命令执行结束</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"--------------------------------------------------\n"</span>);</span><br><span class="line">    mysys(<span class="string">"echo HELLO WORLD"</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"--------------------------------------------------\n"</span>);</span><br><span class="line">    mysys(<span class="string">"ls /"</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"--------------------------------------------------\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试程序的输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">--------------------------------------------------</span><br><span class="line">HELLO WORLD</span><br><span class="line">--------------------------------------------------</span><br><span class="line">bin    core  home	     lib	 mnt   root  snap  tmp	vmlinuz</span><br><span class="line">boot   dev   initrd.img      lost+found  opt   run   srv   usr	vmlinuz.old</span><br><span class="line">cdrom  etc   initrd.img.old  media	 proc  sbin  sys   var</span><br><span class="line">--------------------------------------------------</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="实现思路-3"><a href="#实现思路-3" class="headerlink" title="实现思路"></a>实现思路</h4><p>主进程，也就是我们的main函数，用来进行shell控制台的模拟以及命令的接收；</p>
+<p>那么命令的执行，我们就得用<code>fork()</code>去创建子进程来执行了，主进程必须等待（<code>wait(NULL)</code>）子进程结束才能继续接受用户输入的新的命令；</p>
+<p>在子进程中，我们用<code>execvp</code>函数去实现执行命令这一操作，<code>execvp</code>函数要求我们指定路径和参数列表，这就要求我们必须要对读入的字符串进行分割<code>Split()</code></p>
+<h4 id="具体实现-3"><a href="#具体实现-3" class="headerlink" title="具体实现"></a>具体实现</h4><p>首先我们需要写一个<code>Split</code>函数，对字符串进行按空格进行分割，然后返回参数列表<code>argv</code></p>
+<p>为了代码简洁，其中用到了<code>strtok</code>函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">split</span><span class="params">(<span class="keyword">char</span> *command, <span class="keyword">char</span> *argv[], <span class="keyword">int</span> *cnt)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 分别表示传入的字符串命令，返回的参数列表，以及参数的个数</span></span><br><span class="line">    <span class="keyword">char</span> *str = (<span class="keyword">char</span> *) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * (<span class="built_in">strlen</span>(command) + <span class="number">1</span>));</span><br><span class="line">    <span class="built_in">strcpy</span>(str, command);</span><br><span class="line">    <span class="keyword">char</span> *tmp = strtok(str, <span class="string">" "</span>);</span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (tmp) &#123;</span><br><span class="line">        <span class="keyword">char</span> *s = (<span class="keyword">char</span> *) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * <span class="number">100</span>);</span><br><span class="line">        <span class="built_in">strcpy</span>(s, tmp);</span><br><span class="line">        argv[len] = s;</span><br><span class="line">        len++;</span><br><span class="line">        tmp = strtok(<span class="literal">NULL</span>, <span class="string">" "</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    argv[len] = <span class="literal">NULL</span>;</span><br><span class="line">    *cnt = len;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>mysys</code>中，创立子进程，调用<code>Split</code>进行字符串的分割；</p>
+<p>然后调用<code>execvp</code>执行命令；</p>
+<p>主进程等待子进程执行完毕，再继续运行；</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mysys</span><span class="params">(<span class="keyword">char</span> *argv)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">pid_t</span> pid;</span><br><span class="line">    pid = fork();</span><br><span class="line">    <span class="keyword">char</span> *buf[<span class="number">105</span>];</span><br><span class="line">    split(argv, buf);</span><br><span class="line">    <span class="keyword">if</span> (pid == <span class="number">0</span>) execvp(buf[<span class="number">0</span>], buf);</span><br><span class="line">    wait(<span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="sh1-c"><a href="#sh1-c" class="headerlink" title="sh1.c"></a>sh1.c</h3><h4 id="题目描述-4"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h4><ul>
+<li><p>该程序读取用户输入的命令，调用函数mysys(上一个作业)执行用户的命令，示例如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 编译sh1.c</span><br><span class="line">$ cc -o sh1 sh1.c</span><br><span class="line"></span><br><span class="line"># 执行sh1</span><br><span class="line">$ ./sh </span><br><span class="line"></span><br><span class="line"># sh1打印提示符&gt;，同时读取用户输入的命令echo，并执行输出结果</span><br><span class="line">&gt; echo a b c</span><br><span class="line">a b c</span><br><span class="line"></span><br><span class="line"># sh1打印提示符&gt;，同时读取用户输入的命令cat，并执行输出结果</span><br><span class="line">&gt; cat /etc/passwd</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span><br><span class="line">bin:x:2:2:bin:/bin:/usr/sbin/nologin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>请考虑如何实现内置命令cd、pwd、exit</p>
+</li>
+</ul>
+<h4 id="实现思路-4"><a href="#实现思路-4" class="headerlink" title="实现思路"></a>实现思路</h4><p>由程序读取用户输入命令并无实现难度，只需要将<code>mysys</code>的参数设置为读入的字符串即可，本题与上体唯一的区别就是多了cd、pwd和exit；</p>
+<p>对于这三个命令，我们可以在自己的Shell过程中进行特判，如果不是这三个命令，则直接执行mysys过程；</p>
+<p><code>pwd</code>的实现：通过调用函数<code>getcwd</code>获取当前目录即可</p>
+<p><code>cd</code>的实现：分下列三种情况</p>
+<ul>
+<li><code>cd</code>：第二个参数为NULL，目录不变</li>
+<li><code>cd ..</code>：返回到上一层目录，这个时候通过<code>getcwd</code>获取当前目录，然后找到目录中最后一个<code>/</code>分隔符，将分隔符之后的删除即可</li>
+<li><code>cd dir1/dir2</code>：对于这种一般类型，直接调用<code>chdir()</code>改变当前进程的目录即可</li>
+</ul>
+<p><code>exit</code>的实现：直接退出程序，调用<code>exit(0)</code>或者<code>return</code>均可</p>
+<h4 id="具体实现-4"><a href="#具体实现-4" class="headerlink" title="具体实现"></a>具体实现</h4><p><code>pwd</code>的实现如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pwd</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">char</span> tmp[<span class="number">105</span>];</span><br><span class="line">    getcwd(tmp, <span class="keyword">sizeof</span>(tmp));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>, tmp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>cd</code>的实现如下，分三种情况</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">cd</span><span class="params">(<span class="keyword">char</span> *argv)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (argv == <span class="literal">NULL</span>) chdir(<span class="string">"/home/guest"</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">strcmp</span>(argv, <span class="string">".."</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">char</span> tmp[<span class="number">105</span>];</span><br><span class="line">        getcwd(tmp, <span class="keyword">sizeof</span>(tmp));</span><br><span class="line">        <span class="keyword">int</span> i;</span><br><span class="line">        <span class="keyword">for</span> (i = <span class="built_in">strlen</span>(tmp) - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">            <span class="keyword">if</span> (tmp[i] != <span class="string">'/'</span>) tmp[i] = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">        chdir(tmp);</span><br><span class="line">    &#125; <span class="keyword">else</span> chdir(argv);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>exit</code>的实现：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="built_in">strcmp</span>(buf[<span class="number">0</span>], <span class="string">"exit"</span>) == <span class="number">0</span>) <span class="keyword">return</span>;</span><br></pre></td></tr></table></figure>
+<p>在Shell过程中对上述三种情况进行特判</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Shell1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">char</span> a[<span class="number">1010</span>];</span><br><span class="line">    <span class="keyword">char</span> *buf[<span class="number">105</span>];</span><br><span class="line">    <span class="keyword">char</span> cur_path[<span class="number">105</span>];</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> cnt;</span><br><span class="line">        <span class="built_in">memset</span>(a, <span class="number">0</span>, <span class="keyword">sizeof</span>(a));</span><br><span class="line">        <span class="built_in">memset</span>(buf, <span class="number">0</span>, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">        getcwd(cur_path, <span class="number">105</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"[%s] &gt; "</span>, cur_path);</span><br><span class="line">        fgets(a, <span class="number">105</span>, <span class="built_in">stdin</span>);</span><br><span class="line">        a[<span class="built_in">strlen</span>(a) - <span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">        split(a, buf, &amp;cnt);</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">strcmp</span>(buf[<span class="number">0</span>], <span class="string">"pwd"</span>) == <span class="number">0</span>) pwd();</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">strcmp</span>(buf[<span class="number">0</span>], <span class="string">"cd"</span>) == <span class="number">0</span>) cd(buf[<span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">strcmp</span>(buf[<span class="number">0</span>], <span class="string">"exit"</span>) == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">else</span> mysys(buf, cnt);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="sh2-c"><a href="#sh2-c" class="headerlink" title="sh2.c"></a>sh2.c</h3><h4 id="题目描述-5"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述</h4><p>实现shell程序，要求在第1版的基础上，添加如下功能：</p>
+<p>实现文件重定向</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 执行sh2</span><br><span class="line">$ ./sh2</span><br><span class="line"></span><br><span class="line"># 执行命令echo，并将输出保存到文件log中</span><br><span class="line">&gt; echo hello &gt;log</span><br><span class="line"></span><br><span class="line"># 打印cat命令的输出结果</span><br><span class="line">&gt; cat log</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
+<h4 id="实现思路-5"><a href="#实现思路-5" class="headerlink" title="实现思路"></a>实现思路</h4><p>对echo命令进行特判；</p>
+<p>如果echo命令后面出现了<code>&gt;</code>，则先分割出输出的文件名；</p>
+<p>调用<code>open</code>，打开指定文件，并保存文件描述符<code>fd</code>;</p>
+<p>由于要将结果保存到指定文件中，我们调用<code>dup2(fd,1)</code>，将原来指向标准输出的第1项调整为指向我们的输出文件，这样我们的输出结果就可以保存到目标文件中；</p>
+<p>原理图如下</p>
+<p><img src="/2020/07/10/操作系统实验报告/5.png" alt="5"></p>
+<p><img src="/2020/07/10/操作系统实验报告/6.png" alt="6"></p>
+<h4 id="具体实现-5"><a href="#具体实现-5" class="headerlink" title="具体实现"></a>具体实现</h4><p><code>echo</code>命令重定向的实现，具体讲解见注释</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Echo</span><span class="params">(<span class="keyword">char</span> **argv, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (argv[k - <span class="number">1</span>][<span class="number">0</span>] == <span class="string">'&gt;'</span>) &#123;</span><br><span class="line">        <span class="keyword">char</span> *fname = (<span class="keyword">char</span> *) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * <span class="number">100</span>);</span><br><span class="line">        <span class="keyword">int</span> i;</span><br><span class="line">        <span class="comment">// 解析出文件名，将最后一个字符串前的 "&gt;" 符号去掉</span></span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; <span class="built_in">strlen</span>(argv[k - <span class="number">1</span>]); i++)</span><br><span class="line">            *(fname + i - <span class="number">1</span>) = argv[k - <span class="number">1</span>][i];</span><br><span class="line">        <span class="comment">// 新建文件描述符，指向我们的输出文件</span></span><br><span class="line">        <span class="keyword">int</span> fd = open(fname, O_CREAT | O_RDWR, <span class="number">0666</span>);</span><br><span class="line">        <span class="comment">// 将文件描述符表中指向标准输出的1号项改为指向输出文件</span></span><br><span class="line">        dup2(fd, <span class="number">1</span>);</span><br><span class="line">        <span class="comment">// 关闭原来的文件描述符</span></span><br><span class="line">        close(fd);</span><br><span class="line">        <span class="comment">// 由于最后一个字符串是文件名，用于重定向，与输出内容无关，所以删除</span></span><br><span class="line">        argv[k - <span class="number">1</span>] = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 调用echo命令</span></span><br><span class="line">    execvp(argv[<span class="number">0</span>], argv);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原来的mysys过程里面加入对于<code>echo</code>的特判</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mysys</span><span class="params">(<span class="keyword">char</span> **argv, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">pid_t</span> pid;</span><br><span class="line">    pid = fork();</span><br><span class="line">    <span class="keyword">if</span> (pid == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">strcmp</span>(argv[<span class="number">0</span>], <span class="string">"echo"</span>) == <span class="number">0</span>)</span><br><span class="line">            Echo(argv, k);</span><br><span class="line">        <span class="keyword">else</span> execvp(argv[<span class="number">0</span>], argv);</span><br><span class="line">    &#125;</span><br><span class="line">    wait(<span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="sh3-c"><a href="#sh3-c" class="headerlink" title="sh3.c"></a>sh3.c</h3><h4 id="题目描述-6"><a href="#题目描述-6" class="headerlink" title="题目描述"></a>题目描述</h4><p>要求在第2版的基础上，添加如下功能</p>
+<ul>
+<li>实现管道</li>
+</ul>
+<ul>
+<li><p>只要求连接两个命令，不要求连接多个命令</p>
+</li>
+<li><p>不要求同时处理管道和重定向</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 执行sh3</span><br><span class="line">$ ./sh3</span><br><span class="line"></span><br><span class="line"># 执行命令cat和wc，使用管道连接cat和wc</span><br><span class="line">&gt; cat /etc/passwd | wc -l</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="实现思路-6"><a href="#实现思路-6" class="headerlink" title="实现思路"></a>实现思路</h4><p>对cat命令进行特判</p>
+<p>如果在cat命令中出现了<code>|</code>符号，则说明要实现管道功能。此时我们依据<code>|</code>符号的位置解析出要连接的两个命令；</p>
+<p>要将<code>cat /etc/passwd</code>的运行结果传递给后面的命令<code>wc -l</code>；</p>
+<p>显然<code>wc -l</code>命令接收前面的<code>cat /etc/passwd</code>命令的运行结果，因此我们可以设置子进程来运行<code>cat</code>命令，然后通过管道将子进程的运行结果传递给主进程，然后由主进程运行<code>wc -l</code>命令，将结果显示在屏幕上；</p>
+<p>下面我们要考虑管道的具体实现</p>
+<p>首先，我们在父进程创建管道，然后<code>fork</code>产生子进程，这时候父子进程具有相同的文件描述符，如下图所示</p>
+<p><img src="/2020/07/10/操作系统实验报告/p1.png" alt="8"></p>
+<p>为了使得子进程的运行结果能输出到主进程，那么显然，我们应该把子进程原来的标准输出1号项目重定向到管道的写端，把父进程的标准输入项目定位到管道我的读端，结果如下图所示</p>
+<p><img src="/2020/07/10/操作系统实验报告/p2.png" alt="8"></p>
+<p>这一过程，对应着子进程中的<code>dup2(fd[1], 1)</code>这句代码，主进程中的<code>dup2(fd[0], 0)</code>这句代码</p>
+<p>当我们建立好如上连接之后，将主进程和子进程多余的文件描述符<code>fd[0]</code>和<code>fd[1]</code>清除，结果如下图所示</p>
+<p><img src="/2020/07/10/操作系统实验报告/p3.png" alt="9"></p>
+<p>这一过程，对应着我们主进程和子进程中的<code>close(fd[0])</code>和<code>close(fd[1])</code>这两句代码。</p>
+<p>当管道建立完毕之后，我们在子进程中调用<code>cat</code>命令，然后在主进程通过管道接收子进程运行结果，执行<code>wc -l</code>命令。</p>
+<h4 id="具体实现-6"><a href="#具体实现-6" class="headerlink" title="具体实现"></a>具体实现</h4><p>首先在mysys中对<code>cat</code>命令进行特判，代码如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mysys</span><span class="params">(<span class="keyword">char</span> **argv, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">pid_t</span> pid;</span><br><span class="line">    pid = fork();</span><br><span class="line">    <span class="keyword">if</span> (pid == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">strcmp</span>(argv[<span class="number">0</span>], <span class="string">"echo"</span>) == <span class="number">0</span>) Echo(argv, k);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">strcmp</span>(argv[<span class="number">0</span>], <span class="string">"cat"</span>) == <span class="number">0</span>) Pipe(argv, k);</span><br><span class="line">        <span class="keyword">else</span> execvp(argv[<span class="number">0</span>], argv);</span><br><span class="line">    &#125;</span><br><span class="line">    wait(<span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>管道功能部分代码如下，具体注释见代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Pipe</span><span class="params">(<span class="keyword">char</span> **argv, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// aa、bb分别存放解析出的两个命令</span></span><br><span class="line">    <span class="keyword">char</span> **aa = (<span class="keyword">char</span> **) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * k);</span><br><span class="line">    <span class="keyword">char</span> **bb = (<span class="keyword">char</span> **) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * k);</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">        aa[i] = (<span class="keyword">char</span> *) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * <span class="number">105</span>);</span><br><span class="line">        bb[i] = (<span class="keyword">char</span> *) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * <span class="number">105</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> la = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 解析出 “|” 前的命令，也就是cat命令</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">strcmp</span>(argv[la], <span class="string">"|"</span>) != <span class="number">0</span>) &#123;</span><br><span class="line">        aa[la] = argv[la];</span><br><span class="line">        la++;</span><br><span class="line">        <span class="keyword">if</span> (la == k) <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    aa[la] = <span class="literal">NULL</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 表示有管道命令，需要建立管道连接，如果没有管道，则直接执行</span></span><br><span class="line">    <span class="keyword">if</span> (la &lt; k) &#123;    </span><br><span class="line">        <span class="keyword">int</span> pid;</span><br><span class="line">        <span class="keyword">int</span> fd[<span class="number">2</span>];</span><br><span class="line">        pipe(fd);</span><br><span class="line">        </span><br><span class="line">        pid = fork();</span><br><span class="line">        <span class="keyword">if</span> (pid==<span class="number">0</span>) &#123;   <span class="comment">// 子进程</span></span><br><span class="line">            dup2(fd[<span class="number">1</span>], <span class="number">1</span>);		<span class="comment">// 重定向标准输出</span></span><br><span class="line">            close(fd[<span class="number">1</span>]);		<span class="comment">// 关闭多余文件描述符</span></span><br><span class="line">            close(fd[<span class="number">0</span>]);</span><br><span class="line">            execvp(aa[<span class="number">0</span>], aa);	<span class="comment">//子进程执行命令</span></span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        dup2(fd[<span class="number">0</span>], <span class="number">0</span>);	 <span class="comment">// 重定向标准输入</span></span><br><span class="line">        close(fd[<span class="number">0</span>]);	<span class="comment">// 关闭多余文件描述符</span></span><br><span class="line">        close(fd[<span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">int</span> lb = <span class="number">0</span>;</span><br><span class="line">        la++;</span><br><span class="line">        <span class="keyword">while</span> (la &lt; k) &#123;     <span class="comment">// 解析出 “|” 后面的命令</span></span><br><span class="line">            bb[lb] = argv[la];</span><br><span class="line">            lb++;</span><br><span class="line">            la++;</span><br><span class="line">        &#125;</span><br><span class="line">        bb[lb] = <span class="literal">NULL</span>;</span><br><span class="line">        execvp(bb[<span class="number">0</span>], bb);	<span class="comment">// 主进程执行命令</span></span><br><span class="line">    &#125; <span class="keyword">else</span> execvp(argv[<span class="number">0</span>], argv);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div style="page-break-after: always;"></div>
+
+<h2 id="多线程题目"><a href="#多线程题目" class="headerlink" title="多线程题目"></a>多线程题目</h2><h3 id="pi1-c"><a href="#pi1-c" class="headerlink" title="pi1.c"></a>pi1.c</h3><h4 id="题目描述-7"><a href="#题目描述-7" class="headerlink" title="题目描述"></a>题目描述</h4><p>使用2个线程根据莱布尼兹级数计算PI</p>
+<ul>
+<li>莱布尼兹级数公式: 1 - 1/3 + 1/5 - 1/7 + 1/9 - … = PI/4</li>
+<li>主线程创建1个辅助线程</li>
+<li>主线程计算级数的前半部分</li>
+<li>辅助线程计算级数的后半部分</li>
+<li>主线程等待辅助线程运行結束后,将前半部分和后半部分相加</li>
+</ul>
+<h4 id="实现思路-7"><a href="#实现思路-7" class="headerlink" title="实现思路"></a>实现思路</h4><p>假设这个公式有N项，那么主线程计算 1…N/2 项，辅助线程计算 N/2+1…N 项；</p>
+<p>设置一个函数<code>Clac(L,R)</code>用于计算这个公式的L到R项，则辅助线程计算<code>Clac(N/2+1,N)</code>，主线程中计算<code>Clac(1,N/2)</code>；</p>
+<p>使用<code>pthread_join</code>等待子线程计算完毕之后，将两个和加起来即可</p>
+<h4 id="具体实现-7"><a href="#具体实现-7" class="headerlink" title="具体实现"></a>具体实现</h4><p>Clac函数的定义</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Clac</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">double</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = l; i &lt;= r; i++) &#123;</span><br><span class="line">        <span class="keyword">double</span> k = <span class="number">1.0</span> / (i * <span class="number">2</span> - <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">2</span>==<span class="number">1</span>) sum += k; <span class="keyword">else</span> sum -= k;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>子线程指向的son函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">son</span><span class="params">(<span class="keyword">void</span> *arg)</span> </span>&#123;</span><br><span class="line">    sum2 = Clac(N / <span class="number">2</span> + <span class="number">1</span>, N);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主程序如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">pthread_t</span> threads;</span><br><span class="line">    <span class="comment">// 子线程计算后半部分</span></span><br><span class="line">    pthread_create(&amp;threads, <span class="literal">NULL</span>, son, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="comment">// 主线程计算前半部分</span></span><br><span class="line">    sum = Clac(<span class="number">1</span>, N / <span class="number">2</span>);</span><br><span class="line">    <span class="comment">// 主线程等待子线程运行完毕</span></span><br><span class="line">    pthread_join(threads, <span class="literal">NULL</span>);</span><br><span class="line">    sum += sum2;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%.10lf\n"</span>, sum * <span class="number">4</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="pi2-c"><a href="#pi2-c" class="headerlink" title="pi2.c"></a>pi2.c</h3><h4 id="题目描述-8"><a href="#题目描述-8" class="headerlink" title="题目描述"></a>题目描述</h4><p>使用N个线程根据莱布尼兹级数计算PI</p>
+<ul>
+<li>与上一题类似，但本题更加通用化，能适应N个核心</li>
+<li>主线程创建N个辅助线程</li>
+<li>每个辅助线程计算一部分任务，并将结果返回</li>
+<li>主线程等待N个辅助线程运行结束，将所有辅助线程的结果累加</li>
+<li>本题要求 1: 使用线程参数，消除程序中的代码重复</li>
+<li>本题要求 2: 不能使用全局变量存储线程返回值</li>
+</ul>
+<h4 id="实现思路-8"><a href="#实现思路-8" class="headerlink" title="实现思路"></a>实现思路</h4><p>与上一题大同小异，设总项数为T，一共N个线程，那么每个线程要计算 T/N 个项。</p>
+<p>需要注意的是，这次我们需要向子线程里传递参数，传入<code>Clac</code>函数的计算区间，线程返回其这段区间的计算结果；</p>
+<p>通过结构体进行参数的传递，<code>p-&gt;l</code>和<code>p-&gt;r</code>表示该线程计算的项的区间，<code>r-&gt;sum</code>为该线程的计算结果，在进行参数传递的时候，需要进行类型的强制转换。</p>
+<p>主线程等待其他线程运行完毕之后，将其返回值逐个相加，即可得到结果。</p>
+<h4 id="具体实现-8"><a href="#具体实现-8" class="headerlink" title="具体实现"></a>具体实现</h4><p>结构体的定义</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 1000000</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> cnt 4</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> l, r;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">result</span> &#123;</span></span><br><span class="line">    <span class="keyword">double</span> sum;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>子线程指向的son函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">son</span><span class="params">(<span class="keyword">void</span> *arg)</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">node</span> *<span class="title">p</span> = (<span class="title">struct</span> <span class="title">node</span> *) <span class="title">arg</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">result</span> *<span class="title">r</span>;</span></span><br><span class="line">    r = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct result));</span><br><span class="line">    r-&gt;sum = Clac(p-&gt;l, p-&gt;r);</span><br><span class="line">    <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主程序如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">pthread_t</span> threads[cnt + <span class="number">1</span>];</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">node</span> <span class="title">a</span>[<span class="title">cnt</span> + 1];</span></span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="comment">// 建立线程</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; cnt; i++) &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">node</span> *<span class="title">tmp</span>;</span></span><br><span class="line">        tmp = &amp;a[i];</span><br><span class="line">        tmp-&gt;l = N / cnt * i + <span class="number">1</span>;</span><br><span class="line">        tmp-&gt;r = N / cnt * (i + <span class="number">1</span>);</span><br><span class="line">        pthread_create(&amp;threads[i], <span class="literal">NULL</span>, son, tmp);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 等待线程计算完，进行和的累加</span></span><br><span class="line">    <span class="keyword">double</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; cnt; i++) &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">result</span> *<span class="title">r</span>;</span></span><br><span class="line">        pthread_join(threads[i], (<span class="keyword">void</span> **) &amp;r);	<span class="comment">// 注意类型的强制转换</span></span><br><span class="line">        sum += r-&gt;sum;</span><br><span class="line">        <span class="built_in">free</span>(r);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%.10lf\n"</span>, sum * <span class="number">4</span>);</span><br><span class="line">    <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="sort-c"><a href="#sort-c" class="headerlink" title="sort.c"></a>sort.c</h3><h4 id="题目描述-9"><a href="#题目描述-9" class="headerlink" title="题目描述"></a>题目描述</h4><p>多线程排序</p>
+<ul>
+<li>主线程创建两个辅助线程</li>
+<li>辅助线程1使用选择排序算法对数组的前半部分排序</li>
+<li>辅助线程2使用选择排序算法对数组的后半部分排序</li>
+<li>主线程等待辅助线程运行結束后,使用归并排序算法归并子线程的计算结果</li>
+<li>本题要求 1: 使用线程参数，消除程序中的代码重复</li>
+</ul>
+<h4 id="实现思路-9"><a href="#实现思路-9" class="headerlink" title="实现思路"></a>实现思路</h4><p>定义结构体，用于进行线程参数的传递，结构体的两个参数<code>L</code>和<code>R</code>表示选择排序的区间为<code>[L..R]</code>；</p>
+<p>注意审题，是辅助线程进行两个选择排序算法的排序，而不是主线程和一个辅助线程分别进行；</p>
+<p>创建<code>thread[0]</code>和<code>thread[1]</code>对数组前后两部分分别排序，主线程使用<code>pthread_join</code>等待两个线程运行完毕后再进行归并；</p>
+<p>归并排序算法和选择排序算法再次不再赘述；</p>
+<h4 id="具体实现-9"><a href="#具体实现-9" class="headerlink" title="具体实现"></a>具体实现</h4><p>选择排序和归并排序的部分，<code>sort1</code>为选择排序，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sort1</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> *arr)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j, tmp;</span><br><span class="line">    <span class="keyword">for</span> (i = l; i &lt; r; i++)</span><br><span class="line">        <span class="keyword">for</span> (j = i + <span class="number">1</span>; j &lt;= r; j++)</span><br><span class="line">            <span class="keyword">if</span> (arr[i] &gt; arr[j]) &#123;</span><br><span class="line">                tmp = arr[i];</span><br><span class="line">                arr[i] = arr[j];</span><br><span class="line">                arr[j] = tmp;</span><br><span class="line">            &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> *a)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> mid=(l+r)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">int</span> c[r+<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> index_1=l,index_2=mid+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (index_1&lt;=mid&amp;&amp;index_2&lt;=r)&#123;</span><br><span class="line">        <span class="keyword">if</span> (a[index_1]&lt;=a[index_2]) c[++cnt]=a[index_1++];</span><br><span class="line">        <span class="keyword">else</span> c[++cnt]=a[index_2++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">if</span> (index_1&lt;=mid)&#123;</span><br><span class="line">        <span class="keyword">for</span> (i=index_1;i&lt;=mid;i++) c[++cnt]=a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (i=index_2;i&lt;=r;i++) c[++cnt]=a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (i=l;i&lt;=r;i++) a[i]=c[i-l+<span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结构体的定义，用于向线程传递参数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> l, r;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>子线程指向<code>son</code>函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">son</span><span class="params">(<span class="keyword">void</span> *arg)</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">node</span> *<span class="title">p</span> = (<span class="title">struct</span> <span class="title">node</span> *) <span class="title">arg</span>;</span></span><br><span class="line">    sort1(p-&gt;l, p-&gt;r, a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主程序如下，具体代码含义见注释</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= n; i++) <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;a[i]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义结构体，用于进行子线程参数的传递</span></span><br><span class="line">    <span class="comment">// tmp[0]用于传递给第一个线程，进行前半部分数组的排序</span></span><br><span class="line">    <span class="comment">// tmp[1]用于传递给后一个线程，进行后半部分数组的排序</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">node</span> *<span class="title">tmp</span>[2];</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">node</span> <span class="title">tt</span>[2];</span></span><br><span class="line">    tmp[<span class="number">0</span>] = &amp;tt[<span class="number">0</span>];</span><br><span class="line">    tmp[<span class="number">1</span>] = &amp;tt[<span class="number">1</span>];</span><br><span class="line">    tmp[<span class="number">0</span>]-&gt;l = <span class="number">1</span>;</span><br><span class="line">    tmp[<span class="number">0</span>]-&gt;r = (<span class="number">1</span> + n) / <span class="number">2</span>;</span><br><span class="line">    tmp[<span class="number">1</span>]-&gt;l = (<span class="number">1</span> + n) / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    tmp[<span class="number">1</span>]-&gt;r = n;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建两个线程</span></span><br><span class="line">    pthread_create(&amp;thread[<span class="number">0</span>], <span class="literal">NULL</span>, son, tmp[<span class="number">0</span>]);</span><br><span class="line">    pthread_create(&amp;thread[<span class="number">1</span>], <span class="literal">NULL</span>, son, tmp[<span class="number">1</span>]);</span><br><span class="line">    <span class="comment">// 主程序等待两个线程执行完毕后，进行归并</span></span><br><span class="line">    pthread_join(thread[<span class="number">0</span>], <span class="literal">NULL</span>);</span><br><span class="line">    pthread_join(thread[<span class="number">1</span>], <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    merge(<span class="number">1</span>, n, a);</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= n; i++) <span class="built_in">printf</span>(<span class="string">"%d "</span>, a[i]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="pc-1"><a href="#pc-1" class="headerlink" title="pc.1"></a>pc.1</h3><h4 id="题目描述-10"><a href="#题目描述-10" class="headerlink" title="题目描述"></a>题目描述</h4><p>pc1.c: 使用条件变量解决生产者、计算者、消费者问题</p>
+<ul>
+<li>系统中有3个线程：生产者、计算者、消费者</li>
+<li>系统中有2个容量为4的缓冲区：buffer1、buffer2</li>
+<li>生产者生产’a’、’b’、’c’、‘d’、’e’、’f’、’g’、’h’八个字符，放入到buffer1</li>
+<li>计算者从buffer1取出字符，将小写字符转换为大写字符，放入到buffer2</li>
+<li>消费者从buffer2取出字符，将其打印到屏幕上</li>
+</ul>
+<h4 id="实现思路-10"><a href="#实现思路-10" class="headerlink" title="实现思路"></a>实现思路</h4><p>该问题是普通生产者消费者问题的变种，是互斥问题和同步问题的混合。</p>
+<p>说白了，就是两个普通生产者-消费者问题进行了连接。在 “生产者-计算者” 关系中，生产者充当生产者，计算者充当消费者，在 “计算者-消费者” 关系中，计算者充当生产者，消费者充当消费者。</p>
+<p>为生产者、计算者、消费者分别设计三个过程，<code>produce()</code>、<code>Calc()</code>、<code>consume()</code></p>
+<p>我们要解决以下两个问题：</p>
+<ul>
+<li>互斥要求：<ul>
+<li>buf1：生产者生产到buf1、计算者从buf1取数据，二者不能同时操作；</li>
+<li>buf2：计算者将数据放到buf2、消费从buf2取数据，二者不能同时操作；</li>
+<li>buf1 为临界资源，在<code>produce()</code>、<code>Calc()</code>过程中，如果要对 buf1 进行操作，需要上锁，操作结束后，把锁打开；</li>
+<li>同理 buf2 为临界资源，在<code>Calc()</code>、<code>consume()</code>过程中，如果要对 buf2 进行操作，需要上锁，操作结束后，把锁打开；</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>同步约束：</p>
+<ul>
+<li><p>当 buf1 满，生产者不能存； 当 buf1 空，计算者不能取；</p>
+</li>
+<li><p>当 buf2 满，计算者不能存； 当 buf2 空，消费者不能取；</p>
+</li>
+<li><p>为了解决上门四个同步约束，我们设置四个条件变量；</p>
+<ul>
+<li>empty1、empty2：表示buf1、buf2中有空闲的位置可以放置；</li>
+<li>full1、full2：表示buf1、buf2中有资源可以取出；</li>
+</ul>
+</li>
+<li><p>利用上述四个条件变量，实现同步约束</p>
+<ul>
+<li><p>当 buf1 一直满的时候，无空闲位置，阻塞 empty1，生产者不能存；</p>
+<p>当 buf1 有空闲位置的时候，解除 empty1 阻塞，生产者存内容，并唤醒 full1，提醒计算者有资源可以取；</p>
+</li>
+<li><p>当 buf1 一直空的时候，无资源可取，阻塞 full1，计算者不能取；</p>
+<p>当 buf1 有东西可取时，计算者取出，并唤醒 empty1，提醒生产者有空位置可以存；</p>
+<p> 同理可得：</p>
+</li>
+<li><p>当 buf2 一直满的时候，无空闲位置，阻塞 empty2，计算者不能存；</p>
+<p>当 buf2 有空闲位置的时候，解除 empty2 阻塞，计算者存内容，并唤醒 full2，提醒消费者有资源可以取；</p>
+</li>
+<li><p>当 buf2 一直空的时候，无资源可取，阻塞 full2，消费者不能取；</p>
+<p>当 buf2 有东西可取时，消费者取出，并唤醒 empty2，提醒计算者有空位置可以存；</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>理清了上面的互斥要求和同步约束的思路之后，问题就比较清晰了，我们使用<code>pthread_mutex_t</code>进行互斥资源的代码编写、使用<code>pthread_cond_t</code>进行条件变量的代码编写即可。</p>
+<p>主线程用于模拟生产者，新建两个线程用于模拟计算者和消费者。</p>
+<p>事实上，这个问题还可以进行推广，有N缓冲区，N+1个人进行存取操作，事实上原理都是一样的。</p>
+<h4 id="具体实现-10"><a href="#具体实现-10" class="headerlink" title="具体实现"></a>具体实现</h4><p>缓冲区、互斥量和条件变量的定义</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> buf1[cap];</span><br><span class="line"><span class="keyword">int</span> buf2[cap];</span><br><span class="line"><span class="keyword">int</span> in1,out1,in2,out2;</span><br><span class="line"><span class="keyword">pthread_mutex_t</span> mutex1,mutex2;</span><br><span class="line"><span class="keyword">pthread_cond_t</span> empty1,empty2;</span><br><span class="line"><span class="keyword">pthread_cond_t</span> full1,full2;</span><br></pre></td></tr></table></figure>
+<p>用于判断缓冲区是空还是满的函数；以及从缓冲区取数据和存数据的函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">is_empty</span><span class="params">(<span class="keyword">int</span> in,<span class="keyword">int</span> out)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> in==out;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">is_full</span><span class="params">(<span class="keyword">int</span> in,<span class="keyword">int</span> out)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> k=(in+<span class="number">1</span>)%cap;</span><br><span class="line">    <span class="keyword">return</span> k==out;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">put_item</span><span class="params">(<span class="keyword">int</span> item,<span class="keyword">int</span> *buf,<span class="keyword">int</span> *in)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len=*in;</span><br><span class="line">    buf[len++]=item;</span><br><span class="line">    len%=cap;</span><br><span class="line">    *in=len;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_item</span><span class="params">(<span class="keyword">int</span> *buf,<span class="keyword">int</span> *out)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> o=*out;</span><br><span class="line">    <span class="keyword">int</span> t=buf[o];</span><br><span class="line">    o=(o+<span class="number">1</span>)%cap;</span><br><span class="line">    *out=o;</span><br><span class="line">    <span class="keyword">return</span> t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>生产者线程</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">produce</span><span class="params">(<span class="keyword">void</span> *arg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;N;i++)&#123;</span><br><span class="line">        pthread_mutex_lock(&amp;mutex1);	<span class="comment">// 进入临界区、上锁</span></span><br><span class="line">        <span class="comment">// 当 buf1 一直满的时，阻塞 empty1</span></span><br><span class="line">        <span class="keyword">while</span> (is_full(in1,out1)) pthread_cond_wait(&amp;empty1,&amp;mutex1);</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">        put_item(<span class="string">'a'</span>+i,buf1,&amp;in1);</span><br><span class="line"></span><br><span class="line">        pthread_cond_signal(&amp;full1);	<span class="comment">// 唤醒full1</span></span><br><span class="line">        pthread_mutex_unlock(&amp;mutex1); <span class="comment">// 退出临界区、开锁</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>计算者线程，计算者有取操作也有存操作，分两部分编写</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">Calc</span><span class="params">(<span class="keyword">void</span> *arg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,temp;</span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;N;i++)&#123;</span><br><span class="line">        <span class="comment">// 对 buf1 的取操作</span></span><br><span class="line">        pthread_mutex_lock(&amp;mutex1);</span><br><span class="line">        <span class="keyword">while</span> (is_empty(in1,out1)) pthread_cond_wait(&amp;full1,&amp;mutex1);</span><br><span class="line"></span><br><span class="line">        temp=get_item(buf1,&amp;out1);</span><br><span class="line">        temp+=<span class="string">'A'</span>-<span class="string">'a'</span>;</span><br><span class="line"></span><br><span class="line">        pthread_cond_signal(&amp;empty1);</span><br><span class="line">        pthread_mutex_unlock(&amp;mutex1);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//-------------------------------</span></span><br><span class="line">        <span class="comment">// 对 buf2 的存操作</span></span><br><span class="line">        pthread_mutex_lock(&amp;mutex2);</span><br><span class="line">        <span class="keyword">while</span> (is_full(in2,out2)) pthread_cond_wait(&amp;empty2,&amp;mutex2);</span><br><span class="line"></span><br><span class="line">        put_item(temp,buf2,&amp;in2);</span><br><span class="line"></span><br><span class="line">        pthread_cond_signal(&amp;full2);</span><br><span class="line">        pthread_mutex_unlock(&amp;mutex2);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>消费者线程</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">consume</span><span class="params">(<span class="keyword">void</span> *arg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,temp;</span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;N;i++)&#123;</span><br><span class="line">        pthread_mutex_lock(&amp;mutex2);</span><br><span class="line">         <span class="comment">// 当 buf2 空的时后，阻塞 full2</span></span><br><span class="line">        <span class="keyword">while</span> (is_empty(in2,out2)) pthread_cond_wait(&amp;full2,&amp;mutex2);</span><br><span class="line"></span><br><span class="line">        temp=get_item(buf2,&amp;out2);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%c\n"</span>,temp);</span><br><span class="line">		</span><br><span class="line">        <span class="comment">// 唤醒empty2</span></span><br><span class="line">        pthread_cond_signal(&amp;empty2);</span><br><span class="line">        pthread_mutex_unlock(&amp;mutex2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主程序，主要用来创建两个子线程，使其和主线程并发运行</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">pthread_t</span> Calc_tid,consumer_tid;</span><br><span class="line">    pthread_mutex_init(&amp;mutex1,<span class="literal">NULL</span>);</span><br><span class="line">    pthread_mutex_init(&amp;mutex2,<span class="literal">NULL</span>);</span><br><span class="line">    pthread_cond_init(&amp;empty1,<span class="literal">NULL</span>);</span><br><span class="line">    pthread_cond_init(&amp;full1,<span class="literal">NULL</span>);</span><br><span class="line">    pthread_cond_init(&amp;empty2,<span class="literal">NULL</span>);</span><br><span class="line">    pthread_cond_init(&amp;full2,<span class="literal">NULL</span>);</span><br><span class="line">    pthread_create(&amp;Calc_tid,<span class="literal">NULL</span>,Calc,<span class="literal">NULL</span>);   <span class="comment">//  线程1 计算者</span></span><br><span class="line">    pthread_create(&amp;consumer_tid,<span class="literal">NULL</span>,consume,<span class="literal">NULL</span>);    <span class="comment">// 线程2 消费者</span></span><br><span class="line"></span><br><span class="line">    produce(<span class="literal">NULL</span>);  <span class="comment">// 主线程 生产者</span></span><br><span class="line">    pthread_join(Calc_tid,<span class="literal">NULL</span>);</span><br><span class="line">    pthread_join(consumer_tid,<span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="pc2-c"><a href="#pc2-c" class="headerlink" title="pc2.c"></a>pc2.c</h3><h4 id="题目描述-11"><a href="#题目描述-11" class="headerlink" title="题目描述"></a>题目描述</h4><p> 使用信号量解决生产者、计算者、消费者问题</p>
+<ul>
+<li>功能和前面的实验相同，使用信号量解决</li>
+</ul>
+<h4 id="实现思路-11"><a href="#实现思路-11" class="headerlink" title="实现思路"></a>实现思路</h4><p>和上一题唯一的区别就是用信号量（PV操作）去实现，其余部分思路相同，因此这里只阐述如何设计信号量</p>
+<p>我们用信号量empty1、empty2、full1、full2、mutex1、mutex2来控制资源；</p>
+<p>empty1 和 empty2初始值为缓冲区的大小，本例子中为4，表示缓冲区还有4个位置可以吃吗数去</p>
+<p>full1 和 full2初始值为0，表示一开始缓冲区并没有数据可以取；</p>
+<p>mutex1 和 mutex2 初始值为1，表示只能同时只能有一个人操作缓冲区；</p>
+<h4 id="具体实现-11"><a href="#具体实现-11" class="headerlink" title="具体实现"></a>具体实现</h4><p>信号量的定义及初始化</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> value;</span><br><span class="line">    <span class="keyword">pthread_mutex_t</span> mutex;</span><br><span class="line">    <span class="keyword">pthread_cond_t</span> cond;</span><br><span class="line">&#125; <span class="keyword">sema_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sema_init</span><span class="params">(<span class="keyword">sema_t</span> *sema, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">    sema-&gt;value = value;</span><br><span class="line">    pthread_mutex_init(&amp;sema-&gt;mutex, <span class="literal">NULL</span>);</span><br><span class="line">    pthread_cond_init(&amp;sema-&gt;cond, <span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>P操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sema_wait</span><span class="params">(<span class="keyword">sema_t</span> *sema)</span> </span>&#123;    <span class="comment">// P操作</span></span><br><span class="line">    pthread_mutex_lock(&amp;sema-&gt;mutex);</span><br><span class="line">    <span class="keyword">while</span> (sema-&gt;value &lt;= <span class="number">0</span>)</span><br><span class="line">        pthread_cond_wait(&amp;sema-&gt;cond, &amp;sema-&gt;mutex);</span><br><span class="line">    sema-&gt;value--;</span><br><span class="line">    pthread_mutex_unlock(&amp;sema-&gt;mutex);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>V操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sema_signal</span><span class="params">(<span class="keyword">sema_t</span> *sema)</span> </span>&#123;        <span class="comment">// V操作</span></span><br><span class="line">    pthread_mutex_lock(&amp;sema-&gt;mutex);</span><br><span class="line">    sema-&gt;value++;</span><br><span class="line">    pthread_cond_signal(&amp;sema-&gt;cond);</span><br><span class="line">    pthread_mutex_unlock(&amp;sema-&gt;mutex);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>生产者、计算者、消费者的实现，具体实现原理在pc1.c中已经进行了详细阐述</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">produce</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">        sema_wait(&amp;empty1);	<span class="comment">// P(empty1)</span></span><br><span class="line">        sema_wait(&amp;mutex1); <span class="comment">// P(mutex1)</span></span><br><span class="line"></span><br><span class="line">        put_item(<span class="string">'a'</span> + i, buf1, &amp;in1);</span><br><span class="line"></span><br><span class="line">        sema_signal(&amp;mutex1);	<span class="comment">// V(mutex)</span></span><br><span class="line">        sema_signal(&amp;full1);    <span class="comment">// V(empty1)</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">Calc</span><span class="params">(<span class="keyword">void</span> *arg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, temp;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">        sema_wait(&amp;full1);	<span class="comment">// P(full1)</span></span><br><span class="line">        sema_wait(&amp;mutex1);   <span class="comment">// P(mutex1)</span></span><br><span class="line"></span><br><span class="line">        temp = get_item(buf1, &amp;out1);</span><br><span class="line">        temp += <span class="string">'A'</span> - <span class="string">'a'</span>;</span><br><span class="line"></span><br><span class="line">        sema_signal(&amp;mutex1);    <span class="comment">// V(mutex1)</span></span><br><span class="line">        sema_signal(&amp;empty1);    <span class="comment">// V(empty1)</span></span><br><span class="line">        <span class="comment">//-----------------------------</span></span><br><span class="line">        sema_wait(&amp;empty2);		<span class="comment">// P(empty1)</span></span><br><span class="line">        sema_wait(&amp;mutex2);		<span class="comment">// P(mutex2)</span></span><br><span class="line"></span><br><span class="line">        put_item(temp, buf2, &amp;in2);</span><br><span class="line"></span><br><span class="line">        sema_signal(&amp;mutex2);    <span class="comment">// V(mutex2)</span></span><br><span class="line">        sema_signal(&amp;full2);	<span class="comment">// V(full2)</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">consume</span><span class="params">(<span class="keyword">void</span> *arg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, temp;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">        sema_wait(&amp;full2);	<span class="comment">// P(full2)</span></span><br><span class="line">        sema_wait(&amp;mutex2);	<span class="comment">// P(mutex2)</span></span><br><span class="line"></span><br><span class="line">        temp = get_item(buf2, &amp;out2);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%c\n"</span>, temp);</span><br><span class="line"></span><br><span class="line">        sema_signal(&amp;mutex2);    <span class="comment">// V(mutex2)</span></span><br><span class="line">        sema_signal(&amp;empty2);	<span class="comment">// V(empty2)</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主程序，主要进行信号量的初始化和线程的创建</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    sema_init(&amp;mutex1, <span class="number">1</span>);</span><br><span class="line">    sema_init(&amp;mutex2, <span class="number">1</span>);</span><br><span class="line">    sema_init(&amp;empty1, cap);</span><br><span class="line">    sema_init(&amp;empty2, cap);</span><br><span class="line">    sema_init(&amp;full1, <span class="number">0</span>);</span><br><span class="line">    sema_init(&amp;full2, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">pthread_t</span> Calc_tid, consumer_tid;</span><br><span class="line">    pthread_create(&amp;Calc_tid, <span class="literal">NULL</span>, Calc, <span class="literal">NULL</span>);</span><br><span class="line">    pthread_create(&amp;consumer_tid, <span class="literal">NULL</span>, consume, <span class="literal">NULL</span>);</span><br><span class="line">    produce();</span><br><span class="line"></span><br><span class="line">    pthread_join(Calc_tid, <span class="literal">NULL</span>);</span><br><span class="line">    pthread_join(consumer_tid, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/06/操作系统实验-文件描述符/" rel="next" title="操作系统实验 - 文件描述符">
+                <i class="fa fa-chevron-left"></i> 操作系统实验 - 文件描述符
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Tan Chu">
+            
+              <p class="site-author-name" itemprop="name">Tan Chu</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/UNIOPTER" title="GitHub &rarr; https://github.com/UNIOPTER" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/p/1005055644965979/home?from=page_100505&mod=TAB&is_all=1#place" title="Weibo &rarr; https://weibo.com/p/1005055644965979/home?from=page_100505&mod=TAB&is_all=1#place" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://space.bilibili.com/151461234" title="Bilibili &rarr; https://space.bilibili.com/151461234" rel="noopener" target="_blank"><i class="fa fa-fw fa-spinner"></i>Bilibili</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#操作系统实验报告"><span class="nav-number">1.</span> <span class="nav-text">操作系统实验报告</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件读写编程题目"><span class="nav-number">1.1.</span> <span class="nav-text">文件读写编程题目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#myecho-c"><span class="nav-number">1.1.1.</span> <span class="nav-text">myecho.c</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现思路"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">实现思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体实现"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">具体实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mycat-c"><span class="nav-number">1.1.2.</span> <span class="nav-text">mycat.c</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-1"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现思路-1"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">实现思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体实现-1"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">具体实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mycp-c"><span class="nav-number">1.1.3.</span> <span class="nav-text">mycp.c</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-2"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现思路-2"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">实现思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体实现-2"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">具体实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多进程题目"><span class="nav-number">1.2.</span> <span class="nav-text">多进程题目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mysys-c"><span class="nav-number">1.2.1.</span> <span class="nav-text">mysys.c</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-3"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现思路-3"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">实现思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体实现-3"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">具体实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sh1-c"><span class="nav-number">1.2.2.</span> <span class="nav-text">sh1.c</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-4"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现思路-4"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">实现思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体实现-4"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">具体实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sh2-c"><span class="nav-number">1.2.3.</span> <span class="nav-text">sh2.c</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-5"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现思路-5"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">实现思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体实现-5"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">具体实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sh3-c"><span class="nav-number">1.2.4.</span> <span class="nav-text">sh3.c</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-6"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现思路-6"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">实现思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体实现-6"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">具体实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程题目"><span class="nav-number">1.3.</span> <span class="nav-text">多线程题目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pi1-c"><span class="nav-number">1.3.1.</span> <span class="nav-text">pi1.c</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-7"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现思路-7"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">实现思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体实现-7"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">具体实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pi2-c"><span class="nav-number">1.3.2.</span> <span class="nav-text">pi2.c</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-8"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现思路-8"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">实现思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体实现-8"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">具体实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sort-c"><span class="nav-number">1.3.3.</span> <span class="nav-text">sort.c</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-9"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现思路-9"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">实现思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体实现-9"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">具体实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pc-1"><span class="nav-number">1.3.4.</span> <span class="nav-text">pc.1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-10"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现思路-10"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">实现思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体实现-10"><span class="nav-number">1.3.4.3.</span> <span class="nav-text">具体实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pc2-c"><span class="nav-number">1.3.5.</span> <span class="nav-text">pc2.c</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述-11"><span class="nav-number">1.3.5.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现思路-11"><span class="nav-number">1.3.5.2.</span> <span class="nav-text">实现思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体实现-11"><span class="nav-number">1.3.5.3.</span> <span class="nav-text">具体实现</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tan Chu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="25,25,112" opacity="0.8" zindex="-1" count="200" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
